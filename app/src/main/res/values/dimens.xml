@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="nombre_app">26sp</dimen>
+    <dimen name="text_btn">16sp</dimen>
+    <dimen name="titulo1">32sp</dimen>
+    <dimen name="box_et">16sp</dimen>
+</resources>
