@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<androidx.constraintlayout.widget.ConstraintLayout
+
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/bg_3">
+
+    <!-- Título superior -->
+
+    <TextView
+        android:id="@+id/tvLoginTitle"
+        android:layout_width="315dp"
+        android:layout_height="wrap_content"
+        android:text="Comienza ya a transferir!"
+        android:textSize="32sp"
+        android:textColor="@color/black"
+        android:fontFamily="@font/jua"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="@id/etEmail"
+        android:layout_marginTop="80dp"/>
+
+    <!-- Cuadro e-mail -->
+
+    <EditText
+
+        android:id="@+id/etEmail"
+        android:layout_width="315dp"
+        android:layout_height="49dp"
+        android:hint="Ingresa tu e-mail"
+        android:textSize="16sp"
+        android:textColorHint="@color/black"
+        android:inputType="textEmailAddress"
+        android:paddingHorizontal="26dp"
+        android:background="@drawable/bg_et"
+        app:layout_constraintTop_toBottomOf="@id/tvLoginTitle"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="95dp" />
+
+    <!-- Cuadro contraseña-->
+
+    <EditText
+
+        android:id="@+id/etPassword"
+        android:layout_width="315dp"
+        android:layout_height="49dp"
+        android:hint="Ingresa tu contraseña"
+        android:textSize="16sp"
+        android:textColorHint="@color/black"
+        android:inputType="textPassword"
+        android:paddingHorizontal="26dp"
+        android:background="@drawable/bg_et"
+        android:drawableEnd="@drawable/ic_eye"
+        app:layout_constraintTop_toBottomOf="@id/etEmail"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="53dp"/>
+
+    <!-- Recordar contraseña-->
+
+    <TextView
+        android:id="@+id/tvRememberTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Olvidaste tu contraseña?"
+        android:textSize="16sp"
+        android:textColor="@color/descripcion_blue"
+        android:fontFamily="@font/jua"
+        app:layout_constraintTop_toBottomOf="@id/etPassword"
+        app:layout_constraintEnd_toEndOf="@id/etPassword"
+        android:layout_marginTop="10dp"/>
+
+    <!-- Botón logearse -->
+
+    <Button
+
+        android:id="@+id/btnLogin"
+        android:layout_width="315dp"
+        android:layout_height="49dp"
+        android:text="Iniciar sesión"
+        android:textColor="@color/white"
+        android:fontFamily="@font/jua"
+        android:background="@drawable/button_primary"
+        app:backgroundTint="@null"
+        app:layout_constraintBottom_toTopOf="@id/tvCreateAccount"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginBottom="24dp"/>
+
+    <!-- Link crear cuenta nueva -->
+
+    <TextView
+
+        android:id="@+id/tvCreateAccount"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Crear nueva cuenta"
+        android:textColor="@color/descripcion_blue"
+        android:textSize="16sp"
+        android:fontFamily="@font/jua"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginBottom="32dp"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
