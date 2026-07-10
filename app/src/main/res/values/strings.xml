@@ -1,3 +1,10 @@
 <resources>
     <string name="app_name">Alke Wallet</string>
+
+    <string name="slogan">El lugar más seguro para tu dinero</string>
+
+    <string name="crear_cuenta">Crear cuenta nueva</string>
+
+    <string name="ya_tiene_cuenta">¿Ya tiene cuenta?</string>
+
 </resources>

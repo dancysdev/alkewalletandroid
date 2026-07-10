@@ -11,16 +11,48 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.AlkeWallet">
+
+        <activity
+            android:name=".RequestMoneyActivity"
+            android:exported="false"/>
+
+        <activity
+            android:name=".SendMoneyActivity"
+            android:exported="false"/>
+
+        <activity
+            android:name=".ProfileActivity"
+            android:exported="false"/>
+
+        <activity
+            android:name=".HomeActivity"
+            android:exported="false"/>
+
+        <activity
+            android:name=".SignUpActivity"
+            android:exported="false"/>
+
+        <activity
+            android:name=".LoginActivity"
+            android:exported="false"/>
+
+        <activity
+            android:name=".LoginSignupActivity"
+            android:exported="false"/>
+
         <activity
             android:name=".SplashActivity"
             android:exported="true"
             android:windowSoftInputMode="adjustResize">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+
+                <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
+
         </activity>
+
     </application>
 
 </manifest>
