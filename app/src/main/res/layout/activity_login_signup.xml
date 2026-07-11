@@ -79,6 +79,7 @@
         android:textAllCaps="false"
         android:textColor="@color/white"
         android:fontFamily="@font/jua"
+
         android:background="@drawable/button_primary"
         app:backgroundTint="@null"
         app:layout_constraintBottom_toTopOf="@id/tvYaTieneCuenta"

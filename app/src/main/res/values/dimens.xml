@@ -4,4 +4,6 @@
     <dimen name="text_btn">16sp</dimen>
     <dimen name="titulo1">32sp</dimen>
     <dimen name="box_et">16sp</dimen>
+    <dimen name="balance">40sp</dimen>
+
 </resources>
