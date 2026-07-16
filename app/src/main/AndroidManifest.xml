@@ -13,11 +13,11 @@
         android:theme="@style/Theme.AlkeWallet">
 
         <activity
-            android:name=".RequestMoneyActivity"
+            android:name=".RequestActivity"
             android:exported="false"/>
 
         <activity
-            android:name=".SendMoneyActivity"
+            android:name=".SendActivity"
             android:exported="false"/>
 
         <activity

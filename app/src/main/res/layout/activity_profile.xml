@@ -29,28 +29,28 @@
             android:textSize="20sp"
             android:fontFamily="@font/jua"
             app:layout_constraintTop_toTopOf="parent"
-            android:layout_marginTop="53dp"
+            android:layout_marginTop="90dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"/>
 
-        <!-- Foto Avatar -->
+        <!-- Fondo circular Avatar -->
         <ImageView
             android:id="@+id/ivAvatarBackground"
             android:layout_width="100dp"
             android:layout_height="100dp"
             android:background="@drawable/bg_avatar_circle"
-
             app:layout_constraintTop_toTopOf="parent"
-            android:layout_marginTop="107dp"
-
+            android:layout_marginTop="120dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"/>
+
+        <!-- Foto perfil  -->
 
         <ImageView
             android:id="@+id/ivAvatar"
             android:layout_width="65dp"
             android:layout_height="74dp"
-            tools:srcCompat="@drawable/pic_profile"
+            app:srcCompat="@drawable/pic_profile"
             app:layout_constraintTop_toTopOf="@id/ivAvatarBackground"
             app:layout_constraintBottom_toBottomOf="@id/ivAvatarBackground"
             app:layout_constraintStart_toStartOf="@id/ivAvatarBackground"
@@ -67,8 +67,8 @@
             android:text="Amanda Alkemy"
             android:textSize="16sp"
             android:fontFamily="@font/jua"
-            app:layout_constraintTop_toTopOf="parent"
-            android:layout_marginTop="215dp"
+            app:layout_constraintTop_toBottomOf="@id/ivAvatarBackground"
+            android:layout_marginTop="10dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"/>
 
@@ -107,7 +107,7 @@
         app:layout_constraintTop_toBottomOf="@id/layoutHeader"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginTop="50dp" />
+        android:layout_marginTop="70dp" />
 
     <!-- Mis tarjetas-->
     <Button
