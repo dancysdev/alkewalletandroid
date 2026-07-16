@@ -8,7 +8,6 @@
     android:layout_height="match_parent"
     android:background="@color/white">
 
-
     <!-- ================= HEADER ================= -->
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -135,7 +134,7 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/layoutHeader"
-        app:layout_constraintVertical_bias="0.0">
+        app:layout_constraintVertical_bias="1.0">
 
         <!-- Botón Enviar Dinero -->
         <Button
@@ -185,13 +184,12 @@
             android:id="@+id/tvUltimasTransacciones"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="20dp"
             android:layout_marginTop="30dp"
             android:fontFamily="@font/jua"
             android:text="Últimas transacciones"
             android:textColor="#1A1A1A"
             android:textSize="16sp"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintStart_toStartOf="@id/btnEnviarDinero"
             app:layout_constraintTop_toBottomOf="@id/btnEnviarDinero" />
 
         <!-- ===================== Transacción 1 ===================== -->
@@ -202,10 +200,11 @@
             android:layout_height="56dp"
 
             android:layout_marginStart="20dp"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="12dp"
             android:layout_marginEnd="20dp"
 
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tvUltimasTransacciones">
 
@@ -243,7 +242,7 @@
                         android:layout_width="18dp"
                         android:layout_height="18dp"
                         android:layout_gravity="center"
-                        android:src="@drawable/plustr" />
+                        android:src="@drawable/ic_plus_alke" />
 
                 </FrameLayout>
 
@@ -261,7 +260,7 @@
                 android:layout_marginStart="12dp"
 
                 android:text="Yhara Khalil"
-                android:textColor="#1A1A1A"
+                android:textColor="@color/black"
                 android:textSize="15sp"
 
                 android:textStyle="bold"
@@ -277,12 +276,9 @@
 
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-
                 android:layout_marginTop="4dp"
-
-                android:text="Hoy, 14:35"
-                android:textColor="#808080"
-
+                android:text="Oct 14, 10:24"
+                android:textColor="@color/black"
                 android:textSize="12sp"
 
                 app:layout_constraintStart_toStartOf="@id/tvNombre1"
@@ -296,9 +292,124 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
 
-                android:text="-$120"
+                android:text="-$15.00"
 
-                android:textColor="#1A1A1A"
+                android:textColor="@color/black"
+                android:textSize="15sp"
+                android:textStyle="bold"
+
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <!-- ===================== Transacción 2 ===================== -->
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/layoutTransaccion2"
+            android:layout_width="0dp"
+            android:layout_height="56dp"
+
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="12dp"
+            android:layout_marginEnd="20dp"
+
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/layoutTransaccion1">
+
+            <!-- Avatar -->
+
+            <FrameLayout
+                android:id="@+id/avatarContainer"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <ImageView
+                    android:id="@+id/imgUsuario1"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:src="@drawable/pic_prof4" />
+
+                <FrameLayout
+                    android:id="@+id/badgeMovimiento"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:layout_gravity="bottom|end"
+                    android:layout_marginEnd="-9dp"
+                    android:layout_marginBottom="-9dp">
+
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:src="@drawable/circle" />
+
+                    <ImageView
+                        android:layout_width="18dp"
+                        android:layout_height="18dp"
+                        android:layout_gravity="center"
+                        android:src="@drawable/ic_less_alke" />
+
+                </FrameLayout>
+
+            </FrameLayout>
+
+
+            <!-- Nombre -->
+
+            <TextView
+                android:id="@+id/tvNombre2"
+
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+
+                android:layout_marginStart="12dp"
+
+                android:text="Sara Ibrahim"
+                android:textColor="@color/black"
+                android:textSize="15sp"
+
+                android:textStyle="bold"
+
+                app:layout_constraintStart_toEndOf="@id/avatarContainer"
+
+                app:layout_constraintTop_toTopOf="@id/avatarContainer" />
+
+            <!-- Fecha -->
+
+            <TextView
+                android:id="@+id/tvFecha2"
+
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+
+                android:layout_marginTop="4dp"
+
+                android:text="Oct 12, 02:13"
+                android:textColor="@color/black"
+
+                android:textSize="12sp"
+
+                app:layout_constraintStart_toStartOf="@id/tvNombre2"
+                app:layout_constraintTop_toBottomOf="@id/tvNombre2" />
+
+            <!-- Monto -->
+
+            <TextView
+                android:id="@+id/tvMonto1"
+
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+
+                android:text="+$20.50"
+
+                android:textColor="@color/black"
                 android:textSize="15sp"
                 android:textStyle="bold"
 
@@ -309,5 +420,14 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.Guideline android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <androidx.constraintlayout.widget.Guideline android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <androidx.constraintlayout.widget.Guideline android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

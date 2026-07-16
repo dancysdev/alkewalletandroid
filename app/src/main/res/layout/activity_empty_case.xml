@@ -1,0 +1,226 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white">
+
+
+    <!-- ================= HEADER ================= -->
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/layoutHeader"
+        android:layout_width="0dp"
+        android:layout_height="260dp"
+        android:background="@drawable/bg_header_diagonal"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <!-- Título -->
+        <TextView
+            android:id="@+id/tvInicio"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="30dp"
+            android:layout_marginTop="50dp"
+            android:text="Inicio"
+            android:textColor="@android:color/white"
+            android:textSize="20sp"
+            android:fontFamily="@font/jua"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <!-- Foto de perfil -->
+        <ImageView
+            android:id="@+id/imgPerfil"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginTop="45dp"
+            android:layout_marginEnd="30dp"
+            android:src="@drawable/prof_pict1"
+            android:scaleType="centerCrop"
+            android:contentDescription="Foto de perfil"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
+
+        <!-- Saludo -->
+        <TextView
+            android:id="@+id/tvSaludo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="30dp"
+            android:layout_marginTop="35dp"
+            android:text="Hola, Amanda!"
+            android:textColor="@android:color/white"
+            android:textSize="16sp"
+            android:fontFamily="@font/jua"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tvInicio" />
+
+        <!-- Balance Total -->
+        <TextView
+            android:id="@+id/tvBalanceTitulo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="30dp"
+            android:layout_marginTop="8dp"
+            android:text="Balance Total"
+            android:textColor="@android:color/white"
+            android:textSize="20sp"
+            android:fontFamily="@font/jua"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tvSaludo" />
+
+        <!-- Monto -->
+        <TextView
+            android:id="@+id/tvBalance"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="30dp"
+            android:layout_marginTop="8dp"
+            android:text="$124.57"
+            android:textColor="@android:color/white"
+            android:textSize="40sp"
+            android:fontFamily="@font/jua"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tvBalanceTitulo" />
+
+        <!-- Campana -->
+        <ImageView
+            android:id="@+id/imgNotificaciones"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_marginEnd="30dp"
+            android:src="@drawable/ic_bell"
+            android:contentDescription="Notificaciones"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="@id/tvBalance"
+            app:layout_constraintTop_toTopOf="@id/tvBalance" />
+
+        <ImageView
+            android:id="@+id/imgBadgeNotificacion"
+            android:layout_width="10dp"
+            android:layout_height="10dp"
+
+            android:src="@drawable/notypoint"
+
+            android:contentDescription="Indicador de notificación"
+
+            android:layout_marginTop="-4dp"
+            android:layout_marginEnd="1dp"
+
+            app:layout_constraintTop_toTopOf="@id/imgNotificaciones"
+            app:layout_constraintEnd_toEndOf="@id/imgNotificaciones"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+    <!-- ================= CONTENIDO LADO BLANCO================= -->
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+
+        android:id="@+id/layoutContent"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="-18dp"
+        android:background="@color/white"
+        android:padding="20dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/layoutHeader"
+        app:layout_constraintVertical_bias="0.0">
+
+        <!-- Botón Enviar Dinero -->
+        <Button
+            android:id="@+id/btnEnviarDinero"
+            android:layout_width="0dp"
+            android:layout_height="49dp"
+
+            android:layout_marginStart="0dp"
+            android:layout_marginTop="30dp"
+            android:layout_marginEnd="10dp"
+            android:background="@drawable/button_secondary"
+            android:drawableLeft="@drawable/ic_send"
+            android:fontFamily="@font/jua"
+            android:text="Enviar dinero"
+            android:textAllCaps="false"
+            android:textColor="@android:color/black"
+            android:textSize="14sp"
+            app:backgroundTint="@null"
+            app:layout_constraintEnd_toStartOf="@id/btnIngresarDinero"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+
+        <!-- Botón Ingresar Dinero -->
+        <Button
+            android:id="@+id/btnIngresarDinero"
+            android:layout_width="0dp"
+            android:layout_height="49dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="30dp"
+            android:layout_marginEnd="0dp"
+            android:background="@drawable/button_primary"
+            android:drawableLeft="@drawable/ic_request"
+            android:fontFamily="@font/jua"
+            android:text="Ingresar dinero"
+            android:textAllCaps="false"
+            android:textColor="@android:color/white"
+            android:textSize="14sp"
+            app:backgroundTint="@null"
+
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/btnEnviarDinero"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <!-- Título: Últimas Transacciones -->
+
+        <TextView
+            android:id="@+id/tvUltimasTransacciones"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
+            android:fontFamily="@font/jua"
+            android:text="Últimas transacciones"
+            android:textColor="@color/black"
+            android:textSize="16sp"
+            app:layout_constraintStart_toStartOf="@id/btnEnviarDinero"
+            app:layout_constraintTop_toBottomOf="@id/btnEnviarDinero" />
+
+        <!-- Imagen empty case -->
+
+        <ImageView
+            android:id="@+id/imgEmpty"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_marginTop="72dp"
+            android:src="@drawable/pic_empty_case"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.498"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tvUltimasTransacciones" />
+
+        <!-- Titulo: No hay transferencias registradas -->
+
+        <TextView
+            android:id="@+id/tvWhitOutTransfer"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:text="No hay transferencias registradas!"
+            android:textColor="@color/black"
+            android:textSize="12sp"
+            android:fontFamily="@font/jua"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/imgEmpty" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

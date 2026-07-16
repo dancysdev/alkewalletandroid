@@ -1,15 +1,17 @@
 <vector xmlns:android="http://schemas.android.com/apk/res/android"
-    android:width="375dp"
+    android:width="260dp"
     android:height="260dp"
-    android:viewportWidth="375"
+    android:viewportWidth="260"
     android:viewportHeight="260">
 
+    <!-- Triángulo azul -->
     <path
         android:fillColor="@color/alke_blue"
-        android:pathData="M0,0 L375,0 L0,260 Z"/>
+        android:pathData="M0,0 L260,0 L0,260 Z"/>
 
+    <!-- Triángulo celeste -->
     <path
         android:fillColor="@color/alke_celeste"
-        android:pathData="M375,0 L375,260 L0,260 Z"/>
+        android:pathData="M260,0 L260,300 L0,241 Z"/>
 
 </vector>

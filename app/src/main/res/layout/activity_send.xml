@@ -1,0 +1,191 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white">
+
+    <TextView
+        android:id="@+id/tvSendTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Enviar dinero"
+        android:textSize="20sp"
+        android:fontFamily="@font/jua"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginTop="53dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
+    <ImageView
+        android:id="@+id/ivBackArrow"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+
+        app:srcCompat="@drawable/ic_back"
+        app:layout_constraintTop_toTopOf="@id/tvProfileTitle"
+        app:layout_constraintBottom_toBottomOf="@id/tvSendTitle"
+
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginStart="70dp"/>
+
+
+    <ImageView
+        android:id="@+id/ivDivider"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:srcCompat="@drawable/divider"
+        tools:layout_editor_absoluteY="105dp" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/layoutProfileInfo"
+        android:layout_width="220dp"
+        android:layout_height="60dp"
+        android:layout_marginTop="25dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@id/tvSendMount"
+        app:layout_constraintTop_toBottomOf="@id/ivDivider">
+
+        <!-- Avatar imagen-->
+
+        <FrameLayout
+            android:id="@+id/avatarContainer"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:id="@+id/imgUsuario1"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:src="@drawable/prof_pict2" />
+        </FrameLayout>
+
+        <!-- Nombre -->
+
+        <TextView
+            android:id="@+id/tvNombre1"
+
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="12dp"
+            android:text="Yhara Khalil"
+            android:textColor="#1A1A1A"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toEndOf="@id/avatarContainer"
+            app:layout_constraintTop_toTopOf="@id/avatarContainer" />
+
+        <!-- Correo electronico -->
+
+        <TextView
+            android:id="@+id/tvFecha1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:text="yara_khalil@gmail.com"
+            android:textColor="@color/correo_gris"
+            android:textSize="12sp"
+            app:layout_constraintStart_toStartOf="@id/tvNombre1"
+            app:layout_constraintTop_toBottomOf="@id/tvNombre1" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <!-- Titulo :Cantidad a transferir -->
+
+    <TextView
+        android:id="@+id/tvSendMount"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Cantidad a transferir"
+        android:textSize="14sp"
+        android:fontFamily="@font/jua"
+        android:textColor="@color/black"
+        app:layout_constraintTop_toBottomOf="@id/layoutProfileInfo"
+        android:layout_marginTop="25dp"
+        app:layout_constraintStart_toStartOf="@id/tvTransferNote"/>
+
+    <!-- Cuadro ingreso de monto para transferir -->
+
+    <EditText
+        android:id="@+id/etMountOutput"
+        android:layout_width="345dp"
+        android:layout_height="56dp"
+        android:inputType="text"
+        android:hint="12.5"
+        android:textSize="16sp"
+        android:paddingHorizontal="26dp"
+        android:textColorHint="@color/alke_verde"
+        android:background="@drawable/bg_out_money"
+        app:layout_constraintTop_toBottomOf="@id/tvSendMount"
+        app:layout_constraintStart_toStartOf="@id/tvSendMount"
+        android:layout_marginTop="10dp" />
+
+    <!-- Titulo : Notas de transferencias-->
+    <TextView
+        android:id="@+id/tvTransferNote"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Notas de transferencia"
+        android:textSize="14sp"
+        android:fontFamily="@font/jua"
+        android:textColor="@color/black"
+        app:layout_constraintTop_toBottomOf="@id/etMountOutput"
+        android:layout_marginTop="30dp"
+        app:layout_constraintStart_toStartOf="@id/btnSend"/>
+
+
+    <!-- Cuadro de notas de envío (opcional)-->
+
+    <EditText
+        android:id="@+id/etTransferNote"
+        android:layout_width="345dp"
+        android:layout_height="200dp"
+        android:inputType="text"
+        android:hint="Agregar notas de transferencia (Opcional)"
+        android:textSize="16sp"
+        android:paddingHorizontal="26dp"
+        android:textColorHint="@color/correo_gris"
+        android:background="@drawable/bg_note"
+        app:layout_constraintTop_toBottomOf="@id/tvTransferNote"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="10dp" />
+
+    <!-- Botón de enviar dinero -->
+
+    <Button
+        android:id="@+id/btnSend"
+        android:layout_width="345dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="24dp"
+
+        android:background="@drawable/button_secondary"
+        android:fontFamily="@font/jua"
+
+        android:text="Enviar dinero"
+        android:textAllCaps="false"
+        android:textColor="@android:color/black"
+        android:textSize="14sp"
+
+        android:drawableLeft="@drawable/ic_send"
+        android:drawablePadding="8dp"
+        android:gravity="center"
+
+        app:backgroundTint="@null"
+
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white">
+
+    <!-- ================= HEADER ================= -->
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+
+        android:id="@+id/layoutHeader"
+        android:layout_width="0dp"
+        android:layout_height="260dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:background="@color/alke_gris"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <!-- Administracion de perfil-->
+
+        <TextView
+            android:id="@+id/tvProfileTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Mi perfil"
+            android:textSize="20sp"
+            android:fontFamily="@font/jua"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginTop="53dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"/>
+
+        <!-- Foto Avatar -->
+        <ImageView
+            android:id="@+id/ivAvatarBackground"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:background="@drawable/bg_avatar_circle"
+
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginTop="107dp"
+
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"/>
+
+        <ImageView
+            android:id="@+id/ivAvatar"
+            android:layout_width="65dp"
+            android:layout_height="74dp"
+            tools:srcCompat="@drawable/pic_profile"
+            app:layout_constraintTop_toTopOf="@id/ivAvatarBackground"
+            app:layout_constraintBottom_toBottomOf="@id/ivAvatarBackground"
+            app:layout_constraintStart_toStartOf="@id/ivAvatarBackground"
+            app:layout_constraintEnd_toEndOf="@id/ivAvatarBackground"/>
+
+
+
+        <!-- Nombre de perfil-->
+
+        <TextView
+            android:id="@+id/tvNameProfile"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Amanda Alkemy"
+            android:textSize="16sp"
+            android:fontFamily="@font/jua"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginTop="215dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"/>
+
+        <!-- Editar perfil-->
+
+        <ImageView
+            android:id="@+id/ivEditar"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+
+            app:srcCompat="@drawable/ic_edit"
+            app:layout_constraintTop_toTopOf="@id/tvProfileTitle"
+            app:layout_constraintBottom_toBottomOf="@id/tvProfileTitle"
+
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginEnd="70dp"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <!-- Mi informacion -->
+    <Button
+        android:id="@+id/btnInfo"
+        android:layout_width="315dp"
+        android:layout_height="49dp"
+        android:text="Mi información"
+        android:gravity="start|center_vertical"
+        android:textColor="@color/black"
+        android:fontFamily="@font/jua"
+        android:background="@drawable/button_profile"
+        app:backgroundTint="@null"
+        android:drawablePadding="10dp"
+        android:drawableLeft="@drawable/ic_profile"
+        android:drawableRight="@drawable/ic_arrow"
+        android:paddingStart="16dp"
+        android:paddingEnd="16dp"
+        app:layout_constraintTop_toBottomOf="@id/layoutHeader"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="50dp" />
+
+    <!-- Mis tarjetas-->
+    <Button
+        android:id="@+id/btnCards"
+        android:layout_width="315dp"
+        android:layout_height="49dp"
+        android:text="Mis tarjetas"
+        android:gravity="start|center_vertical"
+        android:textColor="@color/black"
+        android:fontFamily="@font/jua"
+        android:background="@drawable/button_profile"
+        app:backgroundTint="@null"
+        android:drawablePadding="10dp"
+        android:drawableLeft="@drawable/ic_card"
+        android:drawableRight="@drawable/ic_arrow"
+        android:paddingStart="16dp"
+        android:paddingEnd="16dp"
+        app:layout_constraintTop_toBottomOf="@id/btnInfo"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="25dp" />
+
+    <!-- Opciones -->
+
+    <Button
+        android:id="@+id/btnOptions"
+        android:layout_width="315dp"
+        android:layout_height="49dp"
+        android:text="Opciones"
+        android:gravity="start|center_vertical"
+        android:textColor="@color/black"
+        android:fontFamily="@font/jua"
+        android:background="@drawable/button_profile"
+        app:backgroundTint="@null"
+        android:drawablePadding="10dp"
+        android:drawableLeft="@drawable/ic_settings"
+        android:drawableRight="@drawable/ic_arrow"
+        android:paddingStart="16dp"
+        android:paddingEnd="16dp"
+        app:layout_constraintTop_toBottomOf="@id/btnCards"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="25dp" />
+
+    <!-- Centro de ayuda -->
+
+    <Button
+        android:id="@+id/btnHelpCenter"
+        android:layout_width="315dp"
+        android:layout_height="49dp"
+        android:layout_marginTop="24dp"
+        android:background="@drawable/button_profile"
+        android:drawableLeft="@drawable/ic_help"
+        android:drawableRight="@drawable/ic_arrow"
+        android:drawablePadding="10dp"
+        android:fontFamily="@font/jua"
+        android:gravity="start|center_vertical"
+        android:paddingStart="16dp"
+        android:paddingEnd="16dp"
+        android:text="Centro de ayuda"
+        android:textColor="@color/black"
+        app:backgroundTint="@null"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/btnOptions" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
