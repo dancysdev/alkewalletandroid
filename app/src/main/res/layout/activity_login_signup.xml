@@ -25,15 +25,14 @@
 
     <ImageView
         android:id="@+id/imgLogo"
-        android:layout_width="80dp"
-        android:layout_height="80dp"
+        android:layout_width="@dimen/pic_ts"
+        android:layout_height="@dimen/pic_ts"
         android:src="@drawable/logo"
         android:background="@drawable/logo_background"
-        android:contentDescription="@string/app_name"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginTop="200dp"/>
+        android:layout_marginTop="@dimen/margin_tm"/>
 
     <!-- Nombre de APP -->
 
@@ -42,16 +41,16 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
 
-        android:text="@string/app_name"
-        android:textColor="@color/white"
-        android:textSize="26sp"
-        android:fontFamily="@font/jua"
+        android:text= "@string/appName"
+        android:textColor="@color/blanco"
+        android:textSize="@dimen/text_umx"
+
 
         app:layout_constraintTop_toBottomOf="@id/imgLogo"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
 
-        android:layout_marginTop="20dp"/>
+        android:layout_marginTop="@dimen/spacing_m"/>
 
 
     <!-- Eslogan -->
@@ -60,32 +59,30 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/slogan"
-        android:textColor="@color/white"
-        android:textSize="16sp"
-        android:fontFamily="@font/jua"
+        android:textColor="@color/blanco"
+        android:textSize="@dimen/text_sux"
 
         app:layout_constraintTop_toBottomOf="@id/tvAppName"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginTop="80dp"/>
+        android:layout_marginTop="@dimen/spacing_m"/>
 
     <!-- Botón -->
 
     <Button
         android:id="@+id/btnCrearCuenta"
-        android:layout_width="315dp"
-        android:layout_height="49dp"
-        android:text="@string/crear_cuenta"
-        android:textAllCaps="false"
-        android:textColor="@color/white"
-        android:fontFamily="@font/jua"
-
-        android:background="@drawable/button_primary"
         app:backgroundTint="@null"
+        style="@style/ButtonBlue"
+        android:layout_width="@dimen/btn_tlsx"
+        android:layout_height="@dimen/btn_ups"
+        android:text="@string/crearCuenta"
+        android:textAllCaps="false"
+
         app:layout_constraintBottom_toTopOf="@id/tvYaTieneCuenta"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginBottom="24dp"/>
+
+        android:layout_marginBottom="@dimen/spacing_m"/>
 
     <!-- Texto inferior -->
 
@@ -93,16 +90,15 @@
         android:id="@+id/tvYaTieneCuenta"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/ya_tiene_cuenta"
-        android:textColor="@color/pregunta_blue"
-        android:textSize="16sp"
-        android:fontFamily="@font/jua"
+        android:text="@string/tieneCuenta"
+        android:textColor="@color/azul_font"
+        android:textSize="@dimen/text_uxm"
         android:clickable="true"
         android:focusable="true"
         android:foreground="?attr/selectableItemBackground"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginBottom="32dp"/>
+        android:layout_marginBottom="@dimen/margin_ld"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

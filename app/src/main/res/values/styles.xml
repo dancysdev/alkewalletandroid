@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<resources>
+    <style name="ButtonBlue" parent="Widget.Material3.Button">
+
+        <item name="android:background">@drawable/button_primary</item>
+        <item name="android:textColor">@color/blanco</item>
+        <item name="android:textSize">@dimen/text_uxm</item>
+
+
+    </style>
+
+    <style name="ButtonBlue2" parent="Widget.Material3.Button">
+
+        <item name="android:background">@drawable/button_third</item>
+        <item name="android:textColor">@color/blanco</item>
+        <item name="android:textSize">@dimen/text_uxm</item>
+
+
+    </style>
+
+    <style name="ButtonGreen" parent="Widget.Material3.Button">
+
+        <item name="android:background">@drawable/button_secondary</item>
+        <item name="android:textColor">@color/negro</item>
+        <item name="android:textSize">@dimen/text_uxm</item>
+
+
+    </style>
+
+    <style name="EditText">
+
+        <item name="android:background">@drawable/edit_text_form</item>
+        <item name="android:textColor">@color/negro</item>
+        <item name="android:textSize">@dimen/text_uxm</item>
+        <item name="android:textColorHint">@color/gris_font</item>
+
+
+    </style>
+
+    <style name="TextView">
+
+        <item name="android:textColor">@color/negro</item>
+        <item name="android:textSize">@dimen/text_sux</item>
+
+    </style>
+</resources>

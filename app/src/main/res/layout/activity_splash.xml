@@ -5,15 +5,15 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/alke_blue">
+    android:background="@color/azul_btn">
 
 
     <!-- LOGO-->
 
     <ImageView
         android:id="@+id/imgLogo"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
+        android:layout_width="@dimen/pic_ts"
+        android:layout_height="@dimen/pic_ts"
         android:src="@drawable/logo"
         android:background="@drawable/logo_background"
         android:scaleType="fitCenter"
@@ -30,16 +30,16 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
 
-        android:text="@string/app_name"
-        android:textColor="@color/white"
-        android:textSize="26sp"
-        android:fontFamily="@font/jua"
+        android:text="@string/appName"
+        android:textColor="@color/blanco"
+        android:textSize="@dimen/text_ld"
+
 
         app:layout_constraintTop_toBottomOf="@id/imgLogo"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
 
-        android:layout_marginTop="20dp"/>
+        android:layout_marginTop="@dimen/spacing_m"/>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -2,34 +2,31 @@
 <androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white">
+    android:background="@color/blanco">
 
     <TextView
         android:id="@+id/tvSendTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Enviar dinero"
-        android:textSize="20sp"
-        android:fontFamily="@font/jua"
+        android:text="@string/sendMoney"
+        android:textSize="@dimen/text_m"
         app:layout_constraintTop_toTopOf="parent"
-        android:layout_marginTop="90dp"
+        android:layout_marginTop="@dimen/margin_psl"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"/>
 
     <ImageView
         android:id="@+id/ivBackArrow"
-        android:layout_width="24dp"
-        android:layout_height="24dp"
-
+        android:layout_width="@dimen/pic_umx"
+        android:layout_height="@dimen/pic_umx"
         app:srcCompat="@drawable/ic_back"
-        app:layout_constraintTop_toTopOf="@id/tvProfileTitle"
+
         app:layout_constraintBottom_toBottomOf="@id/tvSendTitle"
 
         app:layout_constraintStart_toStartOf="parent"
-        android:layout_marginStart="70dp"/>
+        android:layout_marginStart="@dimen/margin_psm"/>
 
 
     <ImageView
@@ -46,7 +43,7 @@
         android:id="@+id/layoutProfileInfo"
         android:layout_width="220dp"
         android:layout_height="60dp"
-        android:layout_marginTop="25dp"
+        android:layout_marginTop="@dimen/margin_mx"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@id/tvSendMount"
@@ -65,8 +62,8 @@
 
         <ImageView
             android:id="@+id/imgUsuario1"
-            android:layout_width="60dp"
-            android:layout_height="60dp"
+            android:layout_width="@dimen/pic_ll"
+            android:layout_height="@dimen/pic_ll"
             android:src="@drawable/prof_pict2" />
         </FrameLayout>
 
@@ -79,8 +76,8 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="12dp"
             android:text="Yhara Khalil"
-            android:textColor="#1A1A1A"
-            android:textSize="14sp"
+            android:textColor="@color/negro"
+            android:textSize="@dimen/text_uxm"
             android:textStyle="bold"
             app:layout_constraintStart_toEndOf="@id/avatarContainer"
             app:layout_constraintTop_toTopOf="@id/avatarContainer" />
@@ -91,10 +88,10 @@
             android:id="@+id/tvFecha1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"
+            android:layout_marginTop="@dimen/spacing_uxs"
             android:text="yara_khalil@gmail.com"
-            android:textColor="@color/correo_gris"
-            android:textSize="12sp"
+            android:textColor="@color/gris_font"
+            android:textSize="@dimen/text_sd"
             app:layout_constraintStart_toStartOf="@id/tvNombre1"
             app:layout_constraintTop_toBottomOf="@id/tvNombre1" />
 
@@ -107,83 +104,81 @@
         android:id="@+id/tvSendMount"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Cantidad a transferir"
-        android:textSize="14sp"
+        android:text="@string/mountTrans"
+        android:textSize="@dimen/text_uxm"
+        android:textStyle="bold"
         android:fontFamily="@font/jua"
-        android:textColor="@color/black"
+        android:textColor="@color/negro"
         app:layout_constraintTop_toBottomOf="@id/layoutProfileInfo"
-        android:layout_marginTop="25dp"
+        android:layout_marginTop="@dimen/margin_mx"
         app:layout_constraintStart_toStartOf="@id/tvTransferNote"/>
 
     <!-- Cuadro ingreso de monto para transferir -->
 
     <EditText
         android:id="@+id/etMountOutput"
-        android:layout_width="345dp"
-        android:layout_height="56dp"
+        android:layout_width="@dimen/btn_tlsx"
+        android:layout_height="@dimen/btn_ups"
         android:inputType="text"
         android:hint="12.5"
-        android:textSize="16sp"
         android:paddingHorizontal="26dp"
-        android:textColor="@color/alke_verde"
-        android:textColorHint="@color/alke_verde"
-        android:background="@drawable/bg_out_money"
+        android:paddingVertical="13dp"
+        android:textColor="@color/verde_btn"
+        android:textColorHint="@color/verde_btn"
+        android:background="@drawable/edit_text_green"
+
         app:layout_constraintTop_toBottomOf="@id/tvSendMount"
         app:layout_constraintStart_toStartOf="@id/tvSendMount"
-        android:layout_marginTop="10dp" />
+        android:layout_marginTop="@dimen/margin_s" />
 
     <!-- Titulo : Notas de transferencias-->
     <TextView
         android:id="@+id/tvTransferNote"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Notas de transferencia"
-        android:textSize="14sp"
-        android:fontFamily="@font/jua"
-        android:textColor="@color/black"
+        android:text="@string/transNote"
+        android:textSize="@dimen/text_uxm"
+        android:textStyle="bold"
+        android:textColor="@color/negro"
+
         app:layout_constraintTop_toBottomOf="@id/etMountOutput"
-        android:layout_marginTop="30dp"
+        android:layout_marginTop="@dimen/margin_l"
         app:layout_constraintStart_toStartOf="@id/btnSend"/>
 
 
     <!-- Cuadro de notas de envío (opcional)-->
 
+    <!-- Botón de enviar dinero -->
+
     <EditText
         android:id="@+id/etTransferNote"
-        android:layout_width="345dp"
+        android:layout_width="@dimen/btn_tlsx"
         android:layout_height="200dp"
-        android:inputType="text"
-        android:hint="Agregar notas de transferencia (Opcional)"
-        android:textSize="16sp"
-        android:paddingHorizontal="26dp"
-        android:textColorHint="@color/correo_gris"
-        android:background="@drawable/bg_note"
-        app:layout_constraintTop_toBottomOf="@id/tvTransferNote"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginTop="10dp" />
+        android:layout_marginTop="@dimen/margin_s"
 
-    <!-- Botón de enviar dinero -->
+        android:hint="@string/addCommentary"
+        android:inputType="text"
+        android:paddingHorizontal="26dp"
+        android:paddingVertical="13dp"
+
+        android:textColorHint="@color/gris_font"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tvTransferNote" />
 
     <Button
         android:id="@+id/btnSend"
-        android:layout_width="345dp"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="24dp"
+        android:layout_width="@dimen/btn_tlsx"
+        android:layout_height="@dimen/btn_ups"
+        app:backgroundTint="@null"
+        style="@style/ButtonGreen"
 
-        android:background="@drawable/button_secondary"
-        android:fontFamily="@font/jua"
-
-        android:text="Enviar dinero"
+        android:layout_marginBottom="@dimen/margin_mmux"
+        android:text="@string/sendMoney"
         android:textAllCaps="false"
-        android:textColor="@android:color/black"
-        android:textSize="14sp"
-
         android:drawableLeft="@drawable/ic_send"
         android:drawablePadding="8dp"
         android:gravity="center"
-
-        app:backgroundTint="@null"
 
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"

@@ -1,9 +1,15 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
-    <!-- Base application theme. -->
-    <style name="Base.Theme.AlkeWallet" parent="Theme.Material3.DayNight.NoActionBar">
-        <!-- Customize your light theme here. -->
-        <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
+
+    <!-- Tema base de la aplicación -->
+
+    <style name="Theme.AlkeWallet" parent="Theme.Material3.DayNight.NoActionBar">
+
+        <item name="colorPrimary">@color/azul_btn</item>
+        <item name="colorSecondary">@color/blanco</item>
+        <item name="android:fontFamily">@font/jua</item>
+        <item name="android:textViewStyle">@style/TextView</item>
+        <item name="editTextStyle">@style/EditText</item>
+
     </style>
 
-    <style name="Theme.AlkeWallet" parent="Base.Theme.AlkeWallet" />
 </resources>

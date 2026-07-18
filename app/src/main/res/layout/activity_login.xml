@@ -13,52 +13,47 @@
 
     <TextView
         android:id="@+id/tvLoginTitle"
-        android:layout_width="315dp"
+        android:layout_width="@dimen/et_tlsx"
         android:layout_height="wrap_content"
-        android:text="Ya puedes empezar a transferir!"
-        android:textSize="32sp"
-        android:textColor="@color/black"
-        android:fontFamily="@font/jua"
+        android:text="@string/ready4Transf"
+        android:textSize="@dimen/text_ld"
+
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="@id/etEmail"
-        android:layout_marginTop="80dp"/>
+        android:layout_marginTop="@dimen/margin_psl"/>
 
     <!-- Cuadro e-mail -->
 
     <EditText
 
         android:id="@+id/etEmail"
-        android:layout_width="315dp"
-        android:layout_height="49dp"
-        android:hint="Ingresa tu e-mail"
-        android:textSize="16sp"
-        android:textColorHint="@color/black"
+        android:layout_width="@dimen/et_tlsx"
+        android:layout_height="@dimen/et_ups"
+        android:hint="@string/email"
         android:inputType="textEmailAddress"
         android:paddingHorizontal="26dp"
-        android:background="@drawable/bg_et"
+        android:paddingVertical="13dp"
         app:layout_constraintTop_toBottomOf="@id/tvLoginTitle"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginTop="95dp" />
+        android:layout_marginTop="@dimen/margin_psl" />
 
     <!-- Cuadro contraseña-->
 
     <EditText
 
         android:id="@+id/etPassword"
-        android:layout_width="315dp"
-        android:layout_height="49dp"
-        android:hint="Ingresa tu contraseña"
-        android:textSize="16sp"
-        android:textColorHint="@color/black"
+        android:layout_width="@dimen/et_tlsx"
+        android:layout_height="@dimen/et_ups"
+        android:hint="@string/pass"
         android:inputType="textPassword"
         android:paddingHorizontal="26dp"
-        android:background="@drawable/bg_et"
+        android:paddingVertical="13dp"
         android:drawableEnd="@drawable/ic_eye"
         app:layout_constraintTop_toBottomOf="@id/etEmail"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginTop="53dp"/>
+        android:layout_marginTop="@dimen/margin_dpsx"/>
 
     <!-- Recordar contraseña-->
 
@@ -66,30 +61,28 @@
         android:id="@+id/tvRememberTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Olvidaste tu contraseña?"
+        android:text="@string/forgotPass"
         android:textSize="16sp"
-        android:textColor="@color/pregunta_blue"
+        android:textColor="@color/azul_font"
         android:fontFamily="@font/jua"
         app:layout_constraintTop_toBottomOf="@id/etPassword"
         app:layout_constraintEnd_toEndOf="@id/etPassword"
-        android:layout_marginTop="10dp"/>
+        android:layout_marginTop="@dimen/margin_s"/>
 
     <!-- Botón logearse -->
 
     <Button
-
         android:id="@+id/btnLogin"
-        android:layout_width="315dp"
-        android:layout_height="49dp"
-        android:text="Iniciar sesión"
-        android:textColor="@color/white"
-        android:fontFamily="@font/jua"
-        android:background="@drawable/button_primary"
         app:backgroundTint="@null"
+        style="@style/ButtonBlue"
+        android:layout_width="@dimen/et_tlsx"
+        android:layout_height="@dimen/et_ups"
+        android:layout_marginBottom="@dimen/margin_m"
+        android:text="@string/initSession"
+
         app:layout_constraintBottom_toTopOf="@id/tvCreateAccount"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginBottom="24dp"/>
+        app:layout_constraintStart_toStartOf="parent" />
 
     <!-- Link crear cuenta nueva -->
 
@@ -98,13 +91,11 @@
         android:id="@+id/tvCreateAccount"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Crear nueva cuenta"
-        android:textColor="@color/pregunta_blue"
-        android:textSize="16sp"
-        android:fontFamily="@font/jua"
+        android:text="@string/crearCuenta"
+        android:textColor="@color/azul_font"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginBottom="32dp"/>
+        android:layout_marginBottom="@dimen/margin_ld"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

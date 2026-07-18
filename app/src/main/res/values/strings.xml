@@ -1,10 +1,33 @@
 <resources>
-    <string name="app_name">Alke Wallet</string>
-
+    <string name="appName">Alke Wallet</string>
     <string name="slogan">El lugar más seguro para tu dinero</string>
-
-    <string name="crear_cuenta">Crear cuenta nueva</string>
-
-    <string name="ya_tiene_cuenta">¿Ya tiene cuenta?</string>
+    <string name="crearCuenta">Crear cuenta nueva</string>
+    <string name="tieneCuenta">¿Ya tiene cuenta?</string>
+    <string name="registrarTitle">Registrese y empieze a transferir!</string>
+    <string name="userName">Nombre</string>
+    <string name="userApellido">Apellido</string>
+    <string name="email">Ingresa tu e-mail</string>
+    <string name="pass">ingresa una contraseña</string>
+    <string name="cPass">Confirma tu contraseña</string>
+    <string name="ready4Transf">¡Ya puedes empezar a transferir!</string>
+    <string name="forgotPass">Olvidaste tu contraseña?</string>
+    <string name="initSession">Iniciar sesión</string>
+    <string name="init">Inicio</string>
+    <string name="hi">Hola Amanda!</string>
+    <string name="balanceT">Balance Total</string>
+    <string name="sendMoney">Enviar dinero</string>
+    <string name="requestMoney">Ingresar dinero</string>
+    <string name="lastTrans">últimas transacciones</string>
+    <string name="mountTrans">Cantidad a transferir</string>
+    <string name="editPencil">Editar perfil de usuario</string>
+    <string name="transNote">Notas de transferencia </string>
+    <string name="addCommentary">Añade un comentario (opcional)</string>
+    <string name="mountReceive">Cantidad a ingresar</string>
+    <string name="myProfile">Mi perfil</string>
+    <string name="myInfo">Mi información</string>
+    <string name="myCards">Mis tarjetas</string>
+    <string name="options">Opciones</string>
+    <string name="helpCenter">Centro de ayuda</string>
+    <string name="noTrans">No hay transferencias registradas</string>
 
 </resources>

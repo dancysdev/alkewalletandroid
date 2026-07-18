@@ -5,8 +5,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
 
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/white">
+    android:layout_height="match_parent">
 
     <!-- ================= HEADER ================= -->
 
@@ -24,22 +23,22 @@
             android:id="@+id/tvInicio"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="30dp"
-            android:layout_marginTop="50dp"
-            android:text="Inicio"
-            android:textColor="@android:color/white"
-            android:textSize="20sp"
-            android:fontFamily="@font/jua"
+            android:layout_marginStart="@dimen/margin_l"
+            android:layout_marginTop="@dimen/margin_ps"
+            android:text="@string/init"
+            android:textColor="@color/blanco"
+            android:textSize="@dimen/text_m"
+
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <!-- Foto de perfil -->
         <ImageView
             android:id="@+id/imgPerfil"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:layout_marginTop="45dp"
-            android:layout_marginEnd="30dp"
+            android:layout_width="@dimen/pic_mm"
+            android:layout_height="@dimen/pic_mm"
+            android:layout_marginTop="@dimen/margin_mmx"
+            android:layout_marginEnd="@dimen/margin_l"
             android:src="@drawable/prof_pict1"
             android:scaleType="centerCrop"
             android:contentDescription="Foto de perfil"
@@ -51,12 +50,12 @@
             android:id="@+id/tvSaludo"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="30dp"
-            android:layout_marginTop="35dp"
-            android:text="Hola, Amanda!"
+            android:layout_marginStart="@dimen/margin_l"
+            android:layout_marginTop="@dimen/spacing_lx"
+            android:text="@string/hi"
             android:textColor="@android:color/white"
-            android:textSize="16sp"
-            android:fontFamily="@font/jua"
+            android:textSize="@dimen/text_sux"
+
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tvInicio" />
 
@@ -65,12 +64,12 @@
             android:id="@+id/tvBalanceTitulo"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="30dp"
-            android:layout_marginTop="8dp"
-            android:text="Balance Total"
+            android:layout_marginStart="@dimen/margin_l"
+            android:layout_marginTop="@dimen/spacing_ds"
+            android:text="@string/balanceT"
             android:textColor="@android:color/white"
-            android:textSize="20sp"
-            android:fontFamily="@font/jua"
+            android:textSize="@dimen/text_m"
+
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tvSaludo" />
 
@@ -79,23 +78,23 @@
             android:id="@+id/tvBalance"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="30dp"
-            android:layout_marginTop="8dp"
+            android:layout_marginStart="@dimen/margin_l"
+            android:layout_marginTop="@dimen/spacing_ds"
             android:text="$124.57"
-            android:textColor="@android:color/white"
-            android:textSize="40sp"
-            android:fontFamily="@font/jua"
+            android:textColor="@color/blanco"
+            android:textSize="@dimen/text_mm"
+
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tvBalanceTitulo" />
 
         <!-- Campana -->
         <ImageView
             android:id="@+id/imgNotificaciones"
-            android:layout_width="24dp"
-            android:layout_height="24dp"
-            android:layout_marginEnd="30dp"
+            android:layout_width="@dimen/pic_umx"
+            android:layout_height="@dimen/pic_umx"
+            android:layout_marginEnd="@dimen/margin_l"
             android:src="@drawable/ic_bell"
-            android:contentDescription="Notificaciones"
+            android:contentDescription=" Campana Notificaciones"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintBottom_toBottomOf="@id/tvBalance"
             app:layout_constraintTop_toTopOf="@id/tvBalance" />
@@ -127,7 +126,6 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginTop="-18dp"
-        android:background="@color/white"
         android:padding="20dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -139,20 +137,19 @@
         <!-- Botón Enviar Dinero -->
         <Button
             android:id="@+id/btnEnviarDinero"
+            app:backgroundTint="@null"
+            style="@style/ButtonGreen"
             android:layout_width="0dp"
             android:layout_height="49dp"
-
-            android:layout_marginStart="0dp"
-            android:layout_marginTop="30dp"
-            android:layout_marginEnd="10dp"
-            android:background="@drawable/button_secondary"
             android:drawableLeft="@drawable/ic_send"
-            android:fontFamily="@font/jua"
-            android:text="Enviar dinero"
+
+            android:text="@string/sendMoney"
             android:textAllCaps="false"
-            android:textColor="@android:color/black"
-            android:textSize="14sp"
-            app:backgroundTint="@null"
+
+            android:layout_marginStart="@dimen/margin_m"
+            android:layout_marginTop="@dimen/margin_l"
+            android:layout_marginEnd="@dimen/margin_s"
+
             app:layout_constraintEnd_toStartOf="@id/btnIngresarDinero"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -161,19 +158,17 @@
         <!-- Botón Ingresar Dinero -->
         <Button
             android:id="@+id/btnIngresarDinero"
+            app:backgroundTint="@null"
+            style="@style/ButtonBlue"
+            android:drawableLeft="@drawable/ic_request"
             android:layout_width="0dp"
             android:layout_height="49dp"
-            android:layout_marginStart="10dp"
-            android:layout_marginTop="30dp"
-            android:layout_marginEnd="0dp"
-            android:background="@drawable/button_primary"
-            android:drawableLeft="@drawable/ic_request"
-            android:fontFamily="@font/jua"
-            android:text="Ingresar dinero"
+            android:layout_marginStart="@dimen/margin_s"
+            android:layout_marginTop="@dimen/margin_l"
+            android:layout_marginEnd="@dimen/margin_m"
+
+            android:text="@string/requestMoney"
             android:textAllCaps="false"
-            android:textColor="@android:color/white"
-            android:textSize="14sp"
-            app:backgroundTint="@null"
 
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/btnEnviarDinero"
@@ -185,10 +180,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="30dp"
-            android:fontFamily="@font/jua"
-            android:text="Últimas transacciones"
-            android:textColor="#1A1A1A"
-            android:textSize="16sp"
+            android:text="@string/lastTrans"
+            android:textColor="@color/gris_font"
+            android:textSize="@dimen/text_sux"
+
             app:layout_constraintStart_toStartOf="@id/btnEnviarDinero"
             app:layout_constraintTop_toBottomOf="@id/btnEnviarDinero" />
 
@@ -211,7 +206,7 @@
             <!-- Avatar -->
 
             <FrameLayout
-                android:id="@+id/avatarContainer"
+                android:id="@+id/avatarContainer1"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
 
@@ -221,12 +216,12 @@
 
                 <ImageView
                     android:id="@+id/imgUsuario1"
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
+                    android:layout_width="@dimen/pic_mm"
+                    android:layout_height="@dimen/pic_mm"
                     android:src="@drawable/prof_pict2" />
 
                 <FrameLayout
-                    android:id="@+id/badgeMovimiento"
+                    android:id="@+id/badgeMovimiento1"
                     android:layout_width="24dp"
                     android:layout_height="24dp"
                     android:layout_gravity="bottom|end"
@@ -260,14 +255,14 @@
                 android:layout_marginStart="12dp"
 
                 android:text="Yhara Khalil"
-                android:textColor="@color/black"
-                android:textSize="15sp"
+                android:textColor="@color/negro"
+                android:textSize="@dimen/text_sx"
 
                 android:textStyle="bold"
 
-                app:layout_constraintStart_toEndOf="@id/avatarContainer"
+                app:layout_constraintStart_toEndOf="@id/avatarContainer1"
 
-                app:layout_constraintTop_toTopOf="@id/avatarContainer" />
+                app:layout_constraintTop_toTopOf="@id/avatarContainer1" />
 
             <!-- Fecha -->
 
@@ -278,8 +273,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
                 android:text="Oct 14, 10:24"
-                android:textColor="@color/black"
-                android:textSize="12sp"
+                android:textColor="@color/negro"
+                android:textSize="@dimen/text_sd"
 
                 app:layout_constraintStart_toStartOf="@id/tvNombre1"
                 app:layout_constraintTop_toBottomOf="@id/tvNombre1" />
@@ -294,8 +289,8 @@
 
                 android:text="-$15.00"
 
-                android:textColor="@color/black"
-                android:textSize="15sp"
+                android:textColor="@color/negro"
+                android:textSize="@dimen/text_sd"
                 android:textStyle="bold"
 
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -332,13 +327,13 @@
                 app:layout_constraintTop_toTopOf="parent">
 
                 <ImageView
-                    android:id="@+id/imgUsuario1"
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
+                    android:id="@+id/imgUsuario2"
+                    android:layout_width="@dimen/pic_mm"
+                    android:layout_height="@dimen/pic_mm"
                     android:src="@drawable/pic_prof4" />
 
                 <FrameLayout
-                    android:id="@+id/badgeMovimiento"
+                    android:id="@+id/badgeMovimiento2"
                     android:layout_width="24dp"
                     android:layout_height="24dp"
                     android:layout_gravity="bottom|end"
@@ -372,8 +367,8 @@
                 android:layout_marginStart="12dp"
 
                 android:text="Sara Ibrahim"
-                android:textColor="@color/black"
-                android:textSize="15sp"
+                android:textColor="@color/negro"
+                android:textSize="@dimen/text_sx"
 
                 android:textStyle="bold"
 
@@ -392,9 +387,9 @@
                 android:layout_marginTop="4dp"
 
                 android:text="Oct 12, 02:13"
-                android:textColor="@color/black"
+                android:textColor="@color/negro"
 
-                android:textSize="12sp"
+                android:textSize="@dimen/text_sd"
 
                 app:layout_constraintStart_toStartOf="@id/tvNombre2"
                 app:layout_constraintTop_toBottomOf="@id/tvNombre2" />
@@ -402,15 +397,15 @@
             <!-- Monto -->
 
             <TextView
-                android:id="@+id/tvMonto1"
+                android:id="@+id/tvMonto2"
 
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
 
                 android:text="+$20.50"
 
-                android:textColor="@color/black"
-                android:textSize="15sp"
+                android:textColor="@color/negro"
+                android:textSize="@dimen/text_sx"
                 android:textStyle="bold"
 
                 app:layout_constraintBottom_toBottomOf="parent"

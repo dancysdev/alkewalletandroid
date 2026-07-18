@@ -1,9 +1,90 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <dimen name="nombre_app">26sp</dimen>
-    <dimen name="text_btn">16sp</dimen>
-    <dimen name="titulo1">32sp</dimen>
-    <dimen name="box_et">16sp</dimen>
-    <dimen name="balance">40sp</dimen>
+
+    <!--Sistema de nomenclatura de dimensiones. autor: Dangelo Salinas Valle
+
+    SpacingName ::= Prefix* Base Suffix*
+
+    Modificador    ::= u | d | x
+    Base           ::= s | m | l
+    Multiplicador  ::= o | p | t | c
+
+     u= 1 ;  d= 2;   x= 5
+     s= 10;  m= 20;  l= 30
+     o= 1;   p= 5;   t= 10; c= 100
+
+    [PREFIJOS][MULTIPLICADOR X BASE ][SUFIJOS]
+
+
+    Ejemplos:
+
+    spacing_m = 20dp
+    spacing_mx = 25dp
+    spacing_dm = 18dp
+    spacing_umx = 24dp
+
+    -->
+
+
+    <!-- Espacio entre elementos y bordes de pantalla -->
+
+    <dimen name="margin_s">10dp</dimen>
+    <dimen name="margin_m">20dp</dimen>
+    <dimen name="margin_mmux">66dp</dimen>
+    <dimen name="margin_psm">70dp</dimen>
+    <dimen name="margin_psl">80dp</dimen>
+    <dimen name="margin_md">32dp</dimen>
+    <dimen name="margin_tm">200dp</dimen>
+    <dimen name="margin_mx">25dp</dimen>
+    <dimen name="margin_l">30dp</dimen>
+    <dimen name="margin_ld">32dp</dimen>
+    <dimen name="margin_mmx">45dp</dimen>
+    <dimen name="margin_ps">50sp</dimen>
+    <dimen name="margin_dpsx">53dp</dimen>
+    <dimen name="margin_psmd">72dp</dimen>
+    <dimen name="margin_tsm">120dp</dimen>
+
+
+
+    <!-- Espacio entre titulos -->
+
+    <dimen name="spacing_uxs">4dp</dimen>
+    <dimen name="spacing_ds">8dp</dimen>
+    <dimen name="spacing_m">20dp</dimen>
+    <dimen name="spacing_uxl">24dp</dimen>
+    <dimen name="spacing_lx">35dp</dimen>
+
+
+    <!-- Tamaños elementos clave -->
+
+    <dimen name="pic_umx">24dp</dimen>
+    <dimen name="pic_ts">100dp</dimen>
+    <dimen name="btn_tlsx">315dp</dimen>
+    <dimen name="btn_ups">49dp</dimen>
+    <dimen name="et_tlsx">315dp</dimen>
+    <dimen name="et_ups">49dp</dimen>
+    <dimen name="pic_mm">40dp</dimen>
+    <dimen name="pic_ll">60dp</dimen>
+    <dimen name="pic_llx">65dp</dimen>
+    <dimen name="pic_upsmx">74dp</dimen>
+
+
+
+
+    <!-- Tamaño de Textos y titulos-->
+
+    <dimen name="text_ld">32sp</dimen>
+    <dimen name="text_umx">24sp</dimen>
+    <dimen name="text_m">20sp</dimen>
+    <dimen name="text_sux">16sp</dimen>
+    <dimen name="text_sx">15sp</dimen>
+    <dimen name="text_uxm">14sp</dimen>
+    <dimen name="text_sd">12sp</dimen>
+    <dimen name="text_mux">26sp</dimen>
+    <dimen name="text_mm">40sp</dimen>
+    <dimen name="text_ll">60sp</dimen>
+
+
+
 
 </resources>

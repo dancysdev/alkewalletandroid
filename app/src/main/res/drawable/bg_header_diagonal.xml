@@ -6,12 +6,12 @@
 
     <!-- Triángulo azul -->
     <path
-        android:fillColor="@color/alke_blue"
+        android:fillColor="@color/azul_btn"
         android:pathData="M0,0 L260,0 L0,260 Z"/>
 
     <!-- Triángulo celeste -->
     <path
-        android:fillColor="@color/alke_celeste"
-        android:pathData="M260,0 L260,300 L0,241 Z"/>
+        android:fillColor="@color/celeste_bg"
+        android:pathData="M260,0 L260,260 L0,260 Z"/>
 
 </vector>
