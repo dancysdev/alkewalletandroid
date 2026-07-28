@@ -8,7 +8,7 @@
         <item name="colorSecondary">@color/blanco</item>
         <item name="android:fontFamily">@font/jua</item>
         <item name="android:textViewStyle">@style/TextView</item>
-        <item name="editTextStyle">@style/EditText</item>
+
 
     </style>
 

@@ -119,7 +119,8 @@
         android:id="@+id/etMountOutput"
         android:layout_width="@dimen/btn_tlsx"
         android:layout_height="@dimen/btn_ups"
-        android:inputType="text"
+        android:textCursorDrawable="@drawable/cursor"
+        android:inputType="number"
         android:hint="12.5"
         android:paddingHorizontal="26dp"
         android:paddingVertical="13dp"
@@ -152,19 +153,24 @@
 
     <EditText
         android:id="@+id/etTransferNote"
+        style="@style/EditText"
         android:layout_width="@dimen/btn_tlsx"
         android:layout_height="200dp"
-        android:layout_marginTop="@dimen/margin_s"
-
         android:hint="@string/addCommentary"
-        android:inputType="text"
+
+        android:inputType="textMultiLine"
+        android:gravity="top|start"
+        android:maxLines="8"
+        android:scrollbars="vertical"
+
+
         android:paddingHorizontal="26dp"
         android:paddingVertical="13dp"
-
         android:textColorHint="@color/gris_font"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tvTransferNote"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tvTransferNote" />
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="@dimen/margin_s" />
 
     <Button
         android:id="@+id/btnSend"
