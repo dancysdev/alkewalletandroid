@@ -1,0 +1,99 @@
+package com.example.alkewallet.activities
+
+import android.content.Intent
+import android.os.Bundle
+import android.widget.Button
+import android.widget.EditText
+import android.widget.TextView
+import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
+import com.example.alkewallet.R
+import com.example.alkewallet.controller.UserController
+import com.example.alkewallet.model.Cuenta
+import com.example.alkewallet.model.FakeDatabase
+import com.example.alkewallet.model.Usuario
+
+class SignUpActivity : AppCompatActivity() {
+
+    private val userController = UserController()
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_signup)
+
+        // Referencias
+        val etNombre = findViewById<EditText>(R.id.etNombre)
+        val etApellido = findViewById<EditText>(R.id.etApellido)
+        val etEmail = findViewById<EditText>(R.id.etEmail)
+        val etPasswordMake = findViewById<EditText>(R.id.etPasswordMake)
+        val etPasswordConfirm = findViewById<EditText>(R.id.etPasswordConfirm)
+
+        val btnMakeAccount = findViewById<Button>(R.id.btnMakeAccount)
+        val tvYaTieneCuenta = findViewById<TextView>(R.id.tvYaTieneCuenta)
+
+        // Crear cuenta → Login
+        btnMakeAccount.setOnClickListener {
+
+            val nombre = etNombre.text.toString()
+            val apellido = etApellido.text.toString()
+            val correo = etEmail.text.toString()
+            val password = etPasswordMake.text.toString()
+            val confirmPassword = etPasswordConfirm.text.toString()
+
+            if (password != confirmPassword) {
+
+                Toast.makeText(
+                    this,
+                    "Las contraseñas no coinciden",
+                    Toast.LENGTH_SHORT
+                ).show()
+
+                return@setOnClickListener
+            }
+
+            // Número de cuenta interno
+            val numeroCuenta =
+                "CTA${FakeDatabase.usuarios.size + 1000}"
+
+            val cuenta = Cuenta(
+                numero = numeroCuenta,
+                saldo = 0.0,
+                movimientos = mutableListOf()
+            )
+
+            val usuario = Usuario(
+                id = FakeDatabase.usuarios.size + 1,
+                nombre = nombre,
+                apellido = apellido,
+                correo = correo,
+                password = password,
+
+                // Sin imagen personalizada todavía.
+                // La interfaz mostrará user_default.
+                imagenPerfil = null,
+
+                // UserController generará el ALKE aleatorio.
+                alkeNumero = "",
+
+                cuenta = cuenta
+            )
+
+            userController.crearUsuario(usuario)
+
+            Toast.makeText(
+                this,
+                "Cuenta creada correctamente",
+                Toast.LENGTH_SHORT
+            ).show()
+
+            startActivity(Intent(this, LoginActivity::class.java))
+            finish()
+        }
+
+        // Ya tiene cuenta → Login
+        tvYaTieneCuenta.setOnClickListener {
+            startActivity(Intent(this, LoginActivity::class.java))
+            finish()
+        }
+    }
+}

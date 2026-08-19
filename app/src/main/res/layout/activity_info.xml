@@ -1,0 +1,264 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/white">
+
+    <!-- Header -->
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/layoutHeader"
+        android:layout_width="0dp"
+        android:layout_height="260dp"
+        android:background="@color/gris_bg"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:id="@+id/tvPersonalInfo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_psl"
+            android:text="Mi información personal"
+            android:textSize="@dimen/text_m"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <!-- Fondo circular Avatar -->
+
+        <ImageView
+            android:id="@+id/ivBackArrow"
+            android:layout_width="@dimen/pic_umx"
+            android:layout_height="@dimen/pic_umx"
+            android:layout_marginStart="68dp"
+            app:layout_constraintBottom_toBottomOf="@id/tvPersonalInfo"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@id/tvPersonalInfo"
+            app:layout_constraintVertical_bias="1.0"
+            app:srcCompat="@drawable/ic_back" />
+
+        <ImageView
+            android:id="@+id/ivAvatarBackground"
+            android:layout_width="@dimen/pic_ts"
+            android:layout_height="@dimen/pic_ts"
+            android:layout_marginTop="@dimen/margin_tsm"
+            android:background="@drawable/bg_avatar_circle"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <!-- Foto perfil -->
+
+        <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/ivAvatar"
+            android:layout_width="@dimen/pic_llx"
+            android:layout_height="@dimen/pic_upsmx"
+            app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.App.Circle"
+            app:layout_constraintBottom_toBottomOf="@id/ivAvatarBackground"
+            app:layout_constraintEnd_toEndOf="@id/ivAvatarBackground"
+            app:layout_constraintStart_toStartOf="@id/ivAvatarBackground"
+            app:layout_constraintTop_toTopOf="@id/ivAvatarBackground"
+            app:srcCompat="@drawable/user_default" />
+
+        <!-- Nombre de perfil -->
+
+        <TextView
+            android:id="@+id/tvAvatar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_s"
+            android:text="Avatar Photo"
+            android:textSize="@dimen/text_sx"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/ivAvatarBackground" />
+
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+    <!-- Información del usuario -->
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/layoutUserInfo"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:paddingStart="@dimen/margin_psm"
+        android:paddingEnd="@dimen/margin_psm"
+        android:paddingTop="@dimen/margin_s"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/layoutHeader">
+
+        <!-- Editar perfil -->
+
+        <ImageView
+            android:id="@+id/ivEditar"
+            android:layout_width="@dimen/pic_umx"
+            android:layout_height="@dimen/pic_umx"
+            android:contentDescription="@string/editPencil"
+            app:layout_constraintBottom_toBottomOf="@id/tvDatosUser"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/tvDatosUser"
+            app:layout_constraintTop_toTopOf="@id/tvDatosUser"
+            app:srcCompat="@drawable/ic_edit" />
+
+        <TextView
+            android:id="@+id/tvDatosUser"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Datos"
+            android:textSize="@dimen/text_m"
+            android:layout_marginTop="@dimen/margin_m"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <!-- Barra de divsión-->
+        <ImageView
+            android:id="@+id/ivDivider"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_s"
+
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:srcCompat="@drawable/divider"
+            app:layout_constraintTop_toBottomOf="@id/tvDatosUser"/>
+
+        <!-- Nombre -->
+
+        <TextView
+            android:id="@+id/tvNombreLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Nombre"
+            android:textSize="@dimen/text_m"
+
+            android:layout_marginTop="@dimen/margin_m"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tvDatosUser" />
+
+        <EditText
+            android:id="@+id/etNombre"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:background="@null"
+            android:cursorVisible="false"
+            android:focusable="false"
+            android:focusableInTouchMode="false"
+            android:inputType="textPersonName"
+            android:text="Name"
+            android:textSize="@dimen/text_sux"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tvNombreLabel" />
+
+        <!-- Apellido -->
+
+        <TextView
+            android:id="@+id/tvApellidoLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_s"
+            android:text="Apellido"
+            android:textSize="@dimen/text_m"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/etNombre" />
+
+        <EditText
+            android:id="@+id/etApellido"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:background="@null"
+            android:cursorVisible="false"
+            android:focusable="false"
+            android:focusableInTouchMode="false"
+            android:inputType="textPersonName"
+            android:text="Apellido"
+            android:textSize="@dimen/text_sux"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tvApellidoLabel" />
+
+        <!-- Correo -->
+
+        <TextView
+            android:id="@+id/tvCorreoLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_s"
+            android:text="Correo electrónico"
+            android:textSize="@dimen/text_m"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/etApellido" />
+
+        <EditText
+            android:id="@+id/etCorreo"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:background="@null"
+            android:cursorVisible="false"
+            android:focusable="false"
+            android:focusableInTouchMode="false"
+            android:inputType="textEmailAddress"
+            android:text="correo@ejemplo.com"
+            android:textSize="@dimen/text_sux"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tvCorreoLabel" />
+
+        <!-- Numero Alke -->
+
+        <TextView
+            android:id="@+id/tvNumeroAlkeTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_s"
+            android:text="Numero Alke"
+            android:textSize="@dimen/text_m"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/etCorreo" />
+
+        <TextView
+            android:id="@+id/tvNumeroAlke"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="AlKE300"
+            android:textSize="@dimen/text_sux"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tvNumeroAlkeTitle" />
+
+        <!-- Puntos Alke -->
+
+        <TextView
+            android:id="@+id/tvPuntosLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_s"
+            android:text="Puntos Alke"
+            android:textSize="@dimen/text_m"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tvNumeroAlke" />
+
+        <TextView
+            android:id="@+id/tvPuntosAlke"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="1.250"
+            android:textSize="@dimen/text_sux"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tvPuntosLabel" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

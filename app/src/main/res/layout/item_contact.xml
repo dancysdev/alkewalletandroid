@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="56dp">
+
+    <!-- ===================== Tarjeta contacto===================== -->
+
+    <!-- Avatar -->
+
+    <FrameLayout
+        android:id="@+id/avatarContainer"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:id="@+id/imgUsuarioMovimiento"
+            android:layout_width="@dimen/pic_mm"
+            android:layout_height="@dimen/pic_mm"
+            android:src="@drawable/user_default"
+            android:contentDescription="Imagen de usuario" />
+
+    </FrameLayout>
+
+
+    <!-- Nombre de contacto -->
+
+    <TextView
+        android:id="@+id/tvNombreContacto"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+        android:layout_marginStart="@dimen/margin_sd"
+
+        android:text="defaultName"
+        android:textColor="@color/negro"
+        android:textSize="@dimen/text_sx"
+        android:textStyle="bold"
+
+        app:layout_constraintStart_toEndOf="@id/avatarContainer"
+        app:layout_constraintTop_toTopOf="@id/avatarContainer" />
+
+
+    <!-- Correo electrónico-->
+
+    <TextView
+        android:id="@+id/tvEmail"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+        android:layout_marginTop="@dimen/spacing_uxs"
+        android:fontFamily="sans-serif"
+        android:text="correo@alke.com"
+        android:textColor="@color/negro"
+        android:textSize="@dimen/text_sd"
+
+        app:layout_constraintStart_toStartOf="@id/tvNombreContacto"
+        app:layout_constraintTop_toBottomOf="@id/tvNombreContacto" />
+
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

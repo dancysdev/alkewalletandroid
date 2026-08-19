@@ -11,48 +11,50 @@
         android:roundIcon="@drawable/ic_launcher"
         android:supportsRtl="true"
         android:theme="@style/Theme.AlkeWallet">
-
         <activity
-            android:name=".RequestActivity"
-            android:exported="false"/>
-
+            android:name=".activities.ContactsActivity"
+            android:exported="false" />
         <activity
-            android:name=".SendActivity"
-            android:exported="false"/>
-
+            android:name=".activities.CardsActivity"
+            android:exported="false" />
         <activity
-            android:name=".ProfileActivity"
-            android:exported="false"/>
-
+            android:name=".activities.RequestActivity"
+            android:exported="false" />
         <activity
-            android:name=".HomeActivity"
-            android:exported="false"/>
-
+            android:name=".activities.SendActivity"
+            android:exported="false" />
         <activity
-            android:name=".SignUpActivity"
-            android:exported="false"/>
-
+            android:name=".activities.ProfileActivity"
+            android:exported="false" />
         <activity
-            android:name=".LoginActivity"
-            android:exported="false"/>
-
+            android:name=".activities.HomeActivity"
+            android:exported="false" />
         <activity
-            android:name=".LoginSignupActivity"
-            android:exported="false"/>
-
+            android:name=".activities.SignUpActivity"
+            android:exported="false" />
         <activity
-            android:name=".SplashActivity"
+            android:name=".activities.LoginActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activities.LoginSignupActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activities.SplashActivity"
             android:exported="true"
             android:windowSoftInputMode="adjustResize">
-
             <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
+                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER"/>
+                <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-
         </activity>
-
+        <activity
+            android:name=".activities.InfoActivity"
+            android:exported="false"
+            android:label="@string/title_activity_info"
+            android:resizeableActivity="true"
+            android:theme="@style/Theme.AlkeWallet.NoActionBar"
+            tools:targetApi="24" />
     </application>
 
 </manifest>

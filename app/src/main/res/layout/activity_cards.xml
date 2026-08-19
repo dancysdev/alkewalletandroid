@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/blanco">
+
+
+    <TextView
+        android:id="@+id/tvMyCards"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Mis tarjetas"
+        android:textSize="@dimen/text_umx"
+
+        android:layout_marginTop="@dimen/margin_psl"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/ivBackArrow"
+        android:layout_width="@dimen/pic_umx"
+        android:layout_height="@dimen/pic_umx"
+        app:srcCompat="@drawable/ic_back"
+
+        app:layout_constraintBottom_toBottomOf="@id/tvMyCards"
+
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginStart="@dimen/margin_psm"/>
+
+
+
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerCards"
+        android:layout_width="315dp"
+        android:layout_height="300dp"
+        android:layout_marginTop="@dimen/spacing_m"
+
+        app:layout_constraintTop_toBottomOf="@id/tvMyCards"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
+    <EditText
+        android:id="@+id/etCardType"
+        style="@style/EditText"
+        android:layout_width="@dimen/btn_tlsx"
+        android:layout_height="@dimen/btn_ups"
+        android:layout_marginTop="24dp"
+        android:hint="VISA Debit"
+        android:inputType="text"
+
+        android:paddingHorizontal="26dp"
+        android:paddingVertical="13dp"
+
+        android:textCursorDrawable="@drawable/cursor"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/recyclerCards" />
+
+    <EditText
+        android:id="@+id/etCardNumber"
+        style="@style/EditText"
+        android:layout_width="@dimen/btn_tlsx"
+        android:layout_height="@dimen/btn_ups"
+        android:layout_marginTop="24dp"
+        android:hint="1111 2222 3333 4444"
+        android:inputType="number"
+
+        android:paddingHorizontal="26dp"
+        android:paddingVertical="13dp"
+
+        android:textCursorDrawable="@drawable/cursor"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/etCardType" />
+
+
+    <!-- Botón Ingresar Dinero -->
+    <Button
+        android:id="@+id/btnAddCard"
+        style="@style/ButtonGreen"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="40dp"
+        android:layout_marginTop="28dp"
+
+        android:layout_marginEnd="@dimen/margin_s"
+        android:drawableLeft="@drawable/ic_send"
+
+        android:text="Añadir datos"
+        android:textAllCaps="false"
+        app:backgroundTint="@null"
+
+
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/etCardNumber" />
+
+    <Button
+        android:id="@+id/btnLessCard"
+        app:backgroundTint="@null"
+        style="@style/ButtonBlue"
+        android:drawableLeft="@drawable/ic_request"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/margin_s"
+        android:layout_marginEnd="40dp"
+        android:layout_marginTop="@dimen/margin_l"
+
+        android:text="Eliminar datos"
+        android:textAllCaps="false"
+
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/etCardNumber" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

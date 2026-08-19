@@ -29,7 +29,9 @@
     <!-- Espacio entre elementos y bordes de pantalla -->
 
     <dimen name="margin_s">10dp</dimen>
+    <dimen name="margin_sd">12dp</dimen>
     <dimen name="margin_m">20dp</dimen>
+    <dimen name="margin_mm">40dp</dimen>
     <dimen name="margin_mmux">66dp</dimen>
     <dimen name="margin_psm">70dp</dimen>
     <dimen name="margin_psl">80dp</dimen>
@@ -43,7 +45,6 @@
     <dimen name="margin_dpsx">53dp</dimen>
     <dimen name="margin_psmd">72dp</dimen>
     <dimen name="margin_tsm">120dp</dimen>
-
 
 
     <!-- Espacio entre titulos -->
@@ -69,8 +70,6 @@
     <dimen name="pic_upsmx">74dp</dimen>
 
 
-
-
     <!-- Tamaño de Textos y titulos-->
 
     <dimen name="text_ld">32sp</dimen>
@@ -83,8 +82,13 @@
     <dimen name="text_mux">26sp</dimen>
     <dimen name="text_mm">40sp</dimen>
     <dimen name="text_ll">60sp</dimen>
-
-
+    <dimen name="fab_margin">16dp</dimen>
+    <dimen name="fragment_horizontal_margin">16dp</dimen>
+    <dimen name="item_transform_image_length">48dp</dimen>
+    <dimen name="reflow_text_block_max_percent">1</dimen>
+    <dimen name="reflow_text_block_horizontal_gap">8dp</dimen>
+    <dimen name="reflow_text_title_size">22sp</dimen>
+    <dimen name="reflow_text_description_size">13sp</dimen>
 
 
 </resources>

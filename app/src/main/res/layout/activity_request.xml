@@ -13,7 +13,7 @@
         android:id="@+id/tvRequestTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/requestMoney"
+        android:text="Tarjeta seleccionada"
         android:textSize="@dimen/text_m"
         app:layout_constraintTop_toTopOf="parent"
         android:layout_marginTop="@dimen/margin_psl"
@@ -44,7 +44,7 @@
         android:layout_marginTop="@dimen/margin_l" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/layoutProfileInfo"
+        android:id="@+id/layoutCardInfo"
         android:layout_width="220dp"
         android:layout_height="60dp"
         android:layout_marginTop="@dimen/margin_mx"
@@ -65,21 +65,21 @@
             app:layout_constraintTop_toTopOf="parent">
 
         <ImageView
-            android:id="@+id/imgUsuario1"
+            android:id="@+id/imgCardSelected"
             android:layout_width="@dimen/pic_ll"
             android:layout_height="@dimen/pic_ll"
-            android:src="@drawable/pic_prof3" />
+            android:src="@drawable/ic_card" />
         </FrameLayout>
 
         <!-- Nombre -->
 
         <TextView
-            android:id="@+id/tvNombre1"
+            android:id="@+id/tvCardName"
 
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="12dp"
-            android:text="Reem Khaled"
+            android:text="VISA Debit"
             android:textColor="#1A1A1A"
             android:textSize="@dimen/text_uxm"
             android:textStyle="bold"
@@ -89,15 +89,15 @@
         <!-- Correo electronico -->
 
         <TextView
-            android:id="@+id/tvFecha1"
+            android:id="@+id/tvCardNum"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/spacing_uxs"
-            android:text="reem_1993@gmail.com"
+            android:text="0000 0000 0000 0000"
             android:textColor="@color/gris_font"
             android:textSize="@dimen/text_sd"
-            app:layout_constraintStart_toStartOf="@id/tvNombre1"
-            app:layout_constraintTop_toBottomOf="@id/tvNombre1" />
+            app:layout_constraintStart_toStartOf="@id/tvCardName"
+            app:layout_constraintTop_toBottomOf="@id/tvCardName" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
@@ -112,7 +112,7 @@
         android:textSize="@dimen/text_uxm"
         android:textStyle="bold"
         android:textColor="@color/negro"
-        app:layout_constraintTop_toBottomOf="@id/layoutProfileInfo"
+        app:layout_constraintTop_toBottomOf="@id/layoutCardInfo"
         android:layout_marginTop="@dimen/margin_mx"
         app:layout_constraintStart_toStartOf="@id/tvTransferNote"/>
 

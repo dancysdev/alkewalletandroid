@@ -26,6 +26,7 @@
 
     <EditText
         android:id="@+id/etNombre"
+        style="@style/EditText"
         android:layout_width="@dimen/et_tlsx"
         android:layout_height="@dimen/et_ups"
         android:inputType="text"
@@ -43,6 +44,7 @@
 
     <EditText
         android:id="@+id/etApellido"
+        style="@style/EditText"
         android:layout_width="@dimen/et_tlsx"
         android:layout_height="@dimen/et_ups"
         android:inputType="text"
@@ -59,6 +61,7 @@
     <!-- e-mail -->
         <EditText
             android:id="@+id/etEmail"
+            style="@style/EditText"
             android:layout_width="@dimen/et_tlsx"
             android:layout_height="@dimen/et_ups"
             android:hint="@string/email"
@@ -79,6 +82,7 @@
 
     <EditText
         android:id="@+id/etPasswordMake"
+        style="@style/EditText"
         android:layout_width="@dimen/et_tlsx"
         android:layout_height="@dimen/et_ups"
         android:hint="@string/pass"
@@ -97,6 +101,7 @@
 
     <EditText
         android:id="@+id/etPasswordConfirm"
+        style="@style/EditText"
         android:layout_width="@dimen/et_tlsx"
         android:layout_height="@dimen/et_ups"
         android:hint="@string/cPass"

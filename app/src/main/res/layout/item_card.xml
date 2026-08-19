@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="56dp">
+
+    <!-- ===================== Tarjeta crédito o debito===================== -->
+
+    <!-- Tarjeta-->
+
+    <FrameLayout
+        android:id="@+id/cardContainer"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:id="@+id/imgCardType"
+            android:layout_width="@dimen/pic_mm"
+            android:layout_height="@dimen/pic_mm"
+            android:src="@drawable/ic_card"
+            android:contentDescription="tarjeta de usuario" />
+
+    </FrameLayout>
+
+
+    <!-- Tipo de tarjeta -->
+
+    <TextView
+        android:id="@+id/tvNombreCard"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+        android:layout_marginStart="@dimen/margin_sd"
+
+        android:text="Visa debbit"
+        android:textColor="@color/negro"
+        android:textSize="@dimen/text_sx"
+        android:textStyle="bold"
+
+        app:layout_constraintStart_toEndOf="@id/cardContainer"
+        app:layout_constraintTop_toTopOf="@id/cardContainer" />
+
+
+
+  <!-- Numero card-->
+
+    <TextView
+        android:id="@+id/tvNumeroCard"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+        android:layout_marginTop="@dimen/spacing_uxs"
+        android:fontFamily="sans-serif"
+        android:text="1111 2222 3333 4444"
+        android:textColor="@color/negro"
+        android:textSize="@dimen/text_sd"
+
+        app:layout_constraintStart_toStartOf="@id/tvNombreCard"
+        app:layout_constraintTop_toBottomOf="@id/tvNombreCard" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
