@@ -12,6 +12,7 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import com.example.alkewallet.R
 import com.example.alkewallet.controller.UserController
+import com.example.alkewallet.utils.ImageUtils
 import com.example.alkewallet.utils.SessionManager
 
 class InfoActivity : AppCompatActivity() {
@@ -128,31 +129,10 @@ class InfoActivity : AppCompatActivity() {
         // CARGAR IMAGEN DE PERFIL
         // =================================================
 
-        if (usuario.imagenPerfil == "default_profile") {
-
-            ivAvatar.setImageResource(
-                R.drawable.user_default
-            )
-
-        } else {
-
-            try {
-
-                ivAvatar.setImageURI(
-                    Uri.parse(usuario.imagenPerfil)
-                )
-
-            } catch (e: Exception) {
-
-                // Si la URI ya no es válida,
-                // volvemos a la imagen por defecto.
-
-                ivAvatar.setImageResource(
-                    R.drawable.user_default
-                )
-            }
-        }
-
+        ImageUtils.cargarImagenPerfil(
+            ivAvatar,
+            usuario.imagenPerfil
+        )
 
         // =================================================
         // ESTADO INICIAL

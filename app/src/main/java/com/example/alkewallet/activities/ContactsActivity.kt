@@ -117,7 +117,11 @@ class ContactsActivity : AppCompatActivity() {
         btnAddContact.setOnClickListener {
 
             val alkeNumero =
-                etContactNumber.text.toString().trim().uppercase()
+                etContactNumber.text
+                    .toString()
+                    .trim()
+                    .uppercase()
+                    .removePrefix("ALKE")
 
             if (alkeNumero.isEmpty()) {
 
@@ -209,7 +213,11 @@ class ContactsActivity : AppCompatActivity() {
         btnLessContact.setOnClickListener {
 
             val alkeNumero =
-                etContactNumber.text.toString().trim().uppercase()
+                etContactNumber.text
+                    .toString()
+                    .trim()
+                    .uppercase()
+                    .removePrefix("ALKE")
 
             if (alkeNumero.isEmpty()) {
 

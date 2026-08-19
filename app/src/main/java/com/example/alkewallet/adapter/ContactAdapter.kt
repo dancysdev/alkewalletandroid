@@ -1,6 +1,5 @@
 package com.example.alkewallet.adapter
 
-import android.net.Uri
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,6 +8,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.alkewallet.R
 import com.example.alkewallet.model.Usuario
+import com.example.alkewallet.utils.ImageUtils
 
 class ContactAdapter(
     private val contactos: MutableList<Usuario>,
@@ -66,30 +66,16 @@ class ContactAdapter(
         // IMAGEN DEL CONTACTO
         // =================================================
 
-        if (!contacto.imagenPerfil.isNullOrBlank()) {
-
-            try {
-
-                holder.imgUsuario.setImageURI(
-                    Uri.parse(contacto.imagenPerfil)
-                )
-
-            } catch (e: Exception) {
-
-                holder.imgUsuario.setImageResource(
-                    R.drawable.user_default
-                )
-            }
-
-        } else {
-
-            holder.imgUsuario.setImageResource(
-                R.drawable.user_default
-            )
-        }
+        ImageUtils.cargarImagenPerfil(
+            holder.imgUsuario,
+            contacto.imagenPerfil
+        )
 
 
-        // Seleccionar contacto
+        // =================================================
+        // SELECCIONAR CONTACTO
+        // =================================================
+
         holder.itemView.setOnClickListener {
 
             onContactoClick(contacto)
@@ -102,7 +88,10 @@ class ContactAdapter(
     }
 
 
-    // Actualizar contactos mostrados
+    // =================================================
+    // ACTUALIZAR CONTACTOS MOSTRADOS
+    // =================================================
+
     fun actualizarContactos(
         nuevosContactos: List<Usuario>
     ) {
@@ -113,7 +102,6 @@ class ContactAdapter(
         notifyDataSetChanged()
     }
 }
-
 
 
 

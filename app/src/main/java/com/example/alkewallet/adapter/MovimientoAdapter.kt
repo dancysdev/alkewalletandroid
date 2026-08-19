@@ -1,7 +1,5 @@
 package com.example.alkewallet.adapter
 
-
-import android.net.Uri
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,6 +10,7 @@ import com.example.alkewallet.R
 import com.example.alkewallet.model.FakeDatabase
 import com.example.alkewallet.model.Movimiento
 import com.example.alkewallet.model.Usuario
+import com.example.alkewallet.utils.ImageUtils
 import java.text.NumberFormat
 import java.util.Locale
 
@@ -209,32 +208,10 @@ class MovimientoAdapter(
         usuario: Usuario
     ) {
 
-        val imagen = usuario.imagenPerfil
-
-        if (
-            !imagen.isNullOrBlank() &&
-            imagen != "default_profile"
-        ) {
-
-            try {
-
-                imageView.setImageURI(
-                    Uri.parse(imagen)
-                )
-
-            } catch (e: Exception) {
-
-                imageView.setImageResource(
-                    R.drawable.user_default
-                )
-            }
-
-        } else {
-
-            imageView.setImageResource(
-                R.drawable.user_default
-            )
-        }
+        ImageUtils.cargarImagenPerfil(
+            imageView,
+            usuario.imagenPerfil
+        )
     }
 
 
@@ -242,7 +219,5 @@ class MovimientoAdapter(
         return movimientos.size
     }
 }
-
-
 
 

@@ -1,6 +1,5 @@
 package com.example.alkewallet.activities
 
-
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
@@ -71,13 +70,28 @@ class ProfileActivity : AppCompatActivity() {
                 R.drawable.user_default
             )
 
-        } else {
+        } else if (!usuario.imagenPerfil.isNullOrEmpty()) {
 
             try {
 
-                ivAvatar.setImageURI(
-                    Uri.parse(usuario.imagenPerfil)
+                val resourceId = resources.getIdentifier(
+                    usuario.imagenPerfil,
+                    "drawable",
+                    packageName
                 )
+
+                if (resourceId != 0) {
+
+                    // Imagen perteneciente a drawable
+                    ivAvatar.setImageResource(resourceId)
+
+                } else {
+
+                    // Imagen seleccionada desde el dispositivo
+                    ivAvatar.setImageURI(
+                        Uri.parse(usuario.imagenPerfil)
+                    )
+                }
 
             } catch (e: Exception) {
 
@@ -85,6 +99,12 @@ class ProfileActivity : AppCompatActivity() {
                     R.drawable.user_default
                 )
             }
+
+        } else {
+
+            ivAvatar.setImageResource(
+                R.drawable.user_default
+            )
         }
 
 
@@ -154,4 +174,3 @@ class ProfileActivity : AppCompatActivity() {
         }
     }
 }
-

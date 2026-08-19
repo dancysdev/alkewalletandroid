@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.alkewallet.R
 import com.example.alkewallet.adapter.MovimientoAdapter
+import com.example.alkewallet.utils.ImageUtils
 import com.example.alkewallet.utils.SessionManager
 
 class HomeActivity : AppCompatActivity() {
@@ -79,27 +80,10 @@ class HomeActivity : AppCompatActivity() {
             // IMAGEN DE PERFIL
             // =================================================
 
-            if (usuario.imagenPerfil == "default_profile") {
-
-                imgPerfil.setImageResource(
-                    R.drawable.user_default
-                )
-
-            } else {
-
-                try {
-
-                    imgPerfil.setImageURI(
-                        Uri.parse(usuario.imagenPerfil)
-                    )
-
-                } catch (e: Exception) {
-
-                    imgPerfil.setImageResource(
-                        R.drawable.user_default
-                    )
-                }
-            }
+            ImageUtils.cargarImagenPerfil(
+                imgPerfil,
+                usuario.imagenPerfil
+            )
 
 
             // =================================================
