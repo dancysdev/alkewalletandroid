@@ -2,6 +2,8 @@ package com.example.alkewallet.activities
 
 import android.content.Intent
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageView
@@ -13,6 +15,7 @@ import com.example.alkewallet.R
 import com.example.alkewallet.adapter.CardAdapter
 import com.example.alkewallet.model.Tarjeta
 import com.example.alkewallet.utils.SessionManager
+import com.example.alkewallet.utils.Validator
 
 class CardsActivity : AppCompatActivity() {
 
@@ -47,6 +50,59 @@ class CardsActivity : AppCompatActivity() {
 
         val ivBackArrow =
             findViewById<ImageView>(R.id.ivBackArrow)
+
+
+        // Formatear número de tarjeta automáticamente
+        etCardNumber.addTextChangedListener(object : TextWatcher {
+
+            private var editando = false
+
+            override fun beforeTextChanged(
+                s: CharSequence?,
+                start: Int,
+                count: Int,
+                after: Int
+            ) {
+            }
+
+            override fun onTextChanged(
+                s: CharSequence?,
+                start: Int,
+                before: Int,
+                count: Int
+            ) {
+            }
+
+            override fun afterTextChanged(s: Editable?) {
+
+                if (editando) {
+                    return
+                }
+
+                editando = true
+
+                val numeroLimpio =
+                    s.toString().replace(" ", "")
+
+                val numeroFormateado =
+                    numeroLimpio
+                        .chunked(4)
+                        .joinToString(" ")
+
+                if (numeroFormateado != s.toString()) {
+
+                    etCardNumber.setText(
+                        numeroFormateado
+                    )
+
+                    etCardNumber.setSelection(
+                        numeroFormateado.length
+                    )
+                }
+
+                editando = false
+            }
+        })
 
 
         // RecyclerView
@@ -99,9 +155,46 @@ class CardsActivity : AppCompatActivity() {
                 return@setOnClickListener
             }
 
+            // Validar tipo de tarjeta
+            val errorTipo =
+                Validator.validarTipoTarjeta(tipo)
+
+            if (errorTipo != null) {
+
+                Toast.makeText(
+                    this,
+                    errorTipo,
+                    Toast.LENGTH_SHORT
+                ).show()
+
+                return@setOnClickListener
+            }
+
+            // Validar número de tarjeta
+            val errorNumero =
+                Validator.validarNumeroTarjeta(numero)
+
+            if (errorNumero != null) {
+
+                Toast.makeText(
+                    this,
+                    errorNumero,
+                    Toast.LENGTH_SHORT
+                ).show()
+
+                return@setOnClickListener
+            }
+
+            // Normalizar datos antes de guardar
+            val tipoNormalizado =
+                tipo.uppercase()
+
+            val numeroLimpio =
+                numero.replace(" ", "")
+
             val tarjeta = Tarjeta(
-                nombre = tipo,
-                numero = numero
+                nombre = tipoNormalizado,
+                numero = numeroLimpio
             )
 
             usuario.tarjetas.add(tarjeta)
@@ -124,9 +217,12 @@ class CardsActivity : AppCompatActivity() {
             val numero =
                 etCardNumber.text.toString().trim()
 
+            val numeroLimpio =
+                numero.replace(" ", "")
+
             val tarjeta = usuario.tarjetas.find {
-                it.nombre == tipo &&
-                        it.numero == numero
+                it.nombre.equals(tipo, ignoreCase = true) &&
+                        it.numero == numeroLimpio
             }
 
             if (tarjeta == null) {

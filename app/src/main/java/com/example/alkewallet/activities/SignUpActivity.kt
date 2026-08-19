@@ -12,6 +12,7 @@ import com.example.alkewallet.controller.UserController
 import com.example.alkewallet.model.Cuenta
 import com.example.alkewallet.model.FakeDatabase
 import com.example.alkewallet.model.Usuario
+import com.example.alkewallet.utils.Validator
 
 class SignUpActivity : AppCompatActivity() {
 
@@ -40,6 +41,35 @@ class SignUpActivity : AppCompatActivity() {
             val password = etPasswordMake.text.toString()
             val confirmPassword = etPasswordConfirm.text.toString()
 
+            // Validar correo
+            val errorEmail = Validator.validarEmail(correo)
+
+            if (errorEmail != null) {
+
+                Toast.makeText(
+                    this,
+                    errorEmail,
+                    Toast.LENGTH_SHORT
+                ).show()
+
+                return@setOnClickListener
+            }
+
+            // Validar contraseña
+            val errorPassword = Validator.validarPassword(password)
+
+            if (errorPassword != null) {
+
+                Toast.makeText(
+                    this,
+                    errorPassword,
+                    Toast.LENGTH_SHORT
+                ).show()
+
+                return@setOnClickListener
+            }
+
+            // Confirmar contraseña
             if (password != confirmPassword) {
 
                 Toast.makeText(
