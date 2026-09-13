@@ -10,14 +10,17 @@ import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.lifecycleScope
 import com.example.alkewallet.R
 import com.example.alkewallet.controller.UserController
-import com.example.alkewallet.model.FakeDatabase
 import com.example.alkewallet.utils.SessionManager
+import kotlinx.coroutines.launch
 
 class SendActivity : AppCompatActivity() {
 
-    private val userController = UserController()
+    private val userController by lazy {
+        UserController(this)
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -61,23 +64,13 @@ class SendActivity : AppCompatActivity() {
             findViewById<Button>(R.id.btnSend)
 
         // =====================================================
-        // Recibir AlkeNúmero del contacto
+        // Recibir ALKE del contacto
         // =====================================================
 
         val alkeNumeroContacto =
             intent.getStringExtra("alkeNumeroContacto")
 
-        // =====================================================
-        // Buscar destinatario
-        // =====================================================
-
-        val destinatario =
-            FakeDatabase.usuarios.find {
-                it.alkeNumero == alkeNumeroContacto
-            }
-
-        // Si no existe el contacto, regresar
-        if (destinatario == null) {
+        if (alkeNumeroContacto.isNullOrBlank()) {
 
             Toast.makeText(
                 this,
@@ -90,123 +83,159 @@ class SendActivity : AppCompatActivity() {
         }
 
         // =====================================================
-        // Mostrar información del destinatario
+        // Buscar destinatario en Room
         // =====================================================
 
-        tvNombre.text =
-            "${destinatario.nombre} ${destinatario.apellido}"
+        lifecycleScope.launch {
 
-        tvCorreo.text =
-            destinatario.correo
-
-        // =====================================================
-        // Mostrar avatar del destinatario
-        // =====================================================
-
-        val imagenPerfil = destinatario.imagenPerfil
-
-        if (!imagenPerfil.isNullOrEmpty()) {
-
-            imgUsuario.setImageURI(
-                Uri.parse(imagenPerfil)
-            )
-
-        } else {
-
-            imgUsuario.setImageResource(
-                R.drawable.user_default
-            )
-        }
-
-        // =====================================================
-        // Regresar a contactos
-        // =====================================================
-
-        ivBackArrow.setOnClickListener {
-            finish()
-        }
-
-        // =====================================================
-        // Enviar dinero
-        // =====================================================
-
-        btnSend.setOnClickListener {
-
-            val montoTexto =
-                etMonto.text.toString().trim()
-
-            if (montoTexto.isEmpty()) {
-
-                Toast.makeText(
-                    this,
-                    "Introduce un monto",
-                    Toast.LENGTH_SHORT
-                ).show()
-
-                return@setOnClickListener
-            }
-
-            val monto =
-                montoTexto.toDoubleOrNull()
-
-            if (monto == null || monto <= 0) {
-
-                Toast.makeText(
-                    this,
-                    "Introduce un monto válido",
-                    Toast.LENGTH_SHORT
-                ).show()
-
-                return@setOnClickListener
-            }
-
-            // =================================================
-            // Nota opcional
-            // =================================================
-
-            val nota =
-                etNota.text.toString().trim()
-
-            // =================================================
-            // Realizar transferencia
-            // =================================================
-
-            val transferenciaRealizada =
-                userController.transferirDinero(
-                    emisor = usuarioActual,
-                    destinatario = destinatario,
-                    monto = monto,
-                    nota = nota
+            val destinatario =
+                userController.buscarUsuarioPorAlke(
+                    alkeNumeroContacto
                 )
 
-            // =================================================
-            // Resultado
-            // =================================================
-
-            if (transferenciaRealizada) {
+            if (destinatario == null) {
 
                 Toast.makeText(
-                    this,
-                    "Transferencia realizada correctamente",
+                    this@SendActivity,
+                    "No se encontró el contacto",
                     Toast.LENGTH_SHORT
                 ).show()
-
-                startActivity(
-                    Intent(this, HomeActivity::class.java)
-                )
 
                 finish()
+                return@launch
+            }
+
+            // =================================================
+            // Mostrar información del destinatario
+            // =================================================
+
+            tvNombre.text =
+                "${destinatario.nombre} ${destinatario.apellido}"
+
+            tvCorreo.text =
+                destinatario.correo
+
+            // =================================================
+            // Mostrar avatar del destinatario
+            // =================================================
+
+            val imagenPerfil =
+                destinatario.imagenPerfil
+
+            if (!imagenPerfil.isNullOrEmpty()) {
+
+                imgUsuario.setImageURI(
+                    Uri.parse(imagenPerfil)
+                )
 
             } else {
 
-                Toast.makeText(
-                    this,
-                    "Saldo insuficiente para realizar la transferencia",
-                    Toast.LENGTH_SHORT
-                ).show()
+                imgUsuario.setImageResource(
+                    R.drawable.user_default
+                )
+            }
+
+            // =================================================
+            // Regresar a contactos
+            // =================================================
+
+            ivBackArrow.setOnClickListener {
+                finish()
+            }
+
+            // =================================================
+            // Enviar dinero
+            // =================================================
+
+            btnSend.setOnClickListener {
+
+                val montoTexto =
+                    etMonto.text
+                        .toString()
+                        .trim()
+
+                if (montoTexto.isEmpty()) {
+
+                    Toast.makeText(
+                        this@SendActivity,
+                        "Introduce un monto",
+                        Toast.LENGTH_SHORT
+                    ).show()
+
+                    return@setOnClickListener
+                }
+
+                val monto =
+                    montoTexto.toDoubleOrNull()
+
+                if (monto == null || monto <= 0) {
+
+                    Toast.makeText(
+                        this@SendActivity,
+                        "Introduce un monto válido",
+                        Toast.LENGTH_SHORT
+                    ).show()
+
+                    return@setOnClickListener
+                }
+
+                // =============================================
+                // Nota opcional
+                // =============================================
+
+                val nota =
+                    etNota.text
+                        .toString()
+                        .trim()
+
+                // =============================================
+                // Realizar transferencia mediante Room
+                // =============================================
+
+                lifecycleScope.launch {
+
+                    val transferenciaRealizada =
+                        userController.transferirDinero(
+                            emisor = usuarioActual,
+                            destinatario = destinatario,
+                            monto = monto,
+                            nota = nota.ifBlank { null }
+                        )
+
+                    // =========================================
+                    // Resultado
+                    // =========================================
+
+                    if (transferenciaRealizada) {
+
+                        Toast.makeText(
+                            this@SendActivity,
+                            "Transferencia realizada correctamente",
+                            Toast.LENGTH_SHORT
+                        ).show()
+
+                        startActivity(
+                            Intent(
+                                this@SendActivity,
+                                HomeActivity::class.java
+                            )
+                        )
+
+                        finish()
+
+                    } else {
+
+                        Toast.makeText(
+                            this@SendActivity,
+                            "Saldo insuficiente para realizar la transferencia",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    }
+                }
             }
         }
     }
 }
+
 
 

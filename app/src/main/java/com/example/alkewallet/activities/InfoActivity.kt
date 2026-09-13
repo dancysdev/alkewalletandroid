@@ -1,6 +1,5 @@
 package com.example.alkewallet.activities
 
-
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
@@ -10,10 +9,12 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.lifecycleScope
 import com.example.alkewallet.R
 import com.example.alkewallet.controller.UserController
 import com.example.alkewallet.utils.ImageUtils
 import com.example.alkewallet.utils.SessionManager
+import kotlinx.coroutines.launch
 
 class InfoActivity : AppCompatActivity() {
 
@@ -217,37 +218,42 @@ class InfoActivity : AppCompatActivity() {
 
 
                 // -----------------------------------------
-                // Actualizar FakeDatabase
+                // Actualizar Room
                 // -----------------------------------------
 
-                val userController =
-                    UserController()
+                lifecycleScope.launch {
 
-                userController.editarPerfil(
-                    usuario
-                )
+                    val userController =
+                        UserController(this@InfoActivity)
+
+                    val actualizado =
+                        userController.editarPerfil(usuario)
+
+                    if (!actualizado) {
+                        return@launch
+                    }
+
+                    // -------------------------------------
+                    // Cerrar teclado
+                    // -------------------------------------
+
+                    quitarFocoYTeclado()
 
 
-                // -----------------------------------------
-                // Cerrar teclado
-                // -----------------------------------------
+                    // -------------------------------------
+                    // Volver a ProfileActivity
+                    // -------------------------------------
 
-                quitarFocoYTeclado()
-
-
-                // -----------------------------------------
-                // Volver a ProfileActivity
-                // -----------------------------------------
-
-                startActivity(
-                    Intent(
-                        this,
-                        ProfileActivity::class.java
+                    startActivity(
+                        Intent(
+                            this@InfoActivity,
+                            ProfileActivity::class.java
+                        )
                     )
-                )
 
-                // Destruir InfoActivity
-                finish()
+                    // Destruir InfoActivity
+                    finish()
+                }
             }
         }
 

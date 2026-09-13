@@ -9,15 +9,22 @@ import android.widget.EditText
 import android.widget.ImageView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.alkewallet.R
 import com.example.alkewallet.adapter.CardAdapter
+import com.example.alkewallet.controller.UserController
 import com.example.alkewallet.model.Tarjeta
 import com.example.alkewallet.utils.SessionManager
 import com.example.alkewallet.utils.Validator
+import kotlinx.coroutines.launch
 
 class CardsActivity : AppCompatActivity() {
+
+    private val userController by lazy {
+        UserController(this)
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -52,7 +59,10 @@ class CardsActivity : AppCompatActivity() {
             findViewById<ImageView>(R.id.ivBackArrow)
 
 
-        // Formatear número de tarjeta automáticamente
+        // =================================================
+        // FORMATEAR NÚMERO DE TARJETA
+        // =================================================
+
         etCardNumber.addTextChangedListener(object : TextWatcher {
 
             private var editando = false
@@ -105,7 +115,10 @@ class CardsActivity : AppCompatActivity() {
         })
 
 
-        // RecyclerView
+        // =================================================
+        // RECYCLERVIEW
+        // =================================================
+
         recyclerCards.layoutManager =
             LinearLayoutManager(this)
 
@@ -113,7 +126,6 @@ class CardsActivity : AppCompatActivity() {
             usuario.tarjetas
         ) { tarjeta ->
 
-            // Seleccionar tarjeta y pasar a Request
             val intent = Intent(
                 this,
                 RequestActivity::class.java
@@ -135,7 +147,10 @@ class CardsActivity : AppCompatActivity() {
         recyclerCards.adapter = cardAdapter
 
 
-        // Añadir tarjeta
+        // =================================================
+        // AÑADIR TARJETA
+        // =================================================
+
         btnAddCard.setOnClickListener {
 
             val tipo =
@@ -185,7 +200,7 @@ class CardsActivity : AppCompatActivity() {
                 return@setOnClickListener
             }
 
-            // Normalizar datos antes de guardar
+            // Normalizar datos
             val tipoNormalizado =
                 tipo.uppercase()
 
@@ -197,18 +212,50 @@ class CardsActivity : AppCompatActivity() {
                 numero = numeroLimpio
             )
 
-            usuario.tarjetas.add(tarjeta)
+            lifecycleScope.launch {
 
-            cardAdapter.notifyItemInserted(
-                usuario.tarjetas.lastIndex
-            )
+                // Guardar primero en Room
+                val guardada =
+                    userController.agregarTarjeta(
+                        usuario = usuario,
+                        tarjeta = tarjeta
+                    )
 
-            etCardType.text.clear()
-            etCardNumber.text.clear()
+                if (guardada) {
+
+                    // Solo después de guardar correctamente
+                    // sincronizamos la sesión en memoria.
+                    usuario.tarjetas.add(tarjeta)
+
+                    cardAdapter.notifyItemInserted(
+                        usuario.tarjetas.lastIndex
+                    )
+
+                    etCardType.text.clear()
+                    etCardNumber.text.clear()
+
+                    Toast.makeText(
+                        this@CardsActivity,
+                        "Tarjeta agregada correctamente",
+                        Toast.LENGTH_SHORT
+                    ).show()
+
+                } else {
+
+                    Toast.makeText(
+                        this@CardsActivity,
+                        "La tarjeta ya existe",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
+            }
         }
 
 
-        // Eliminar tarjeta
+        // =================================================
+        // ELIMINAR TARJETA
+        // =================================================
+
         btnLessCard.setOnClickListener {
 
             val tipo =
@@ -221,7 +268,10 @@ class CardsActivity : AppCompatActivity() {
                 numero.replace(" ", "")
 
             val tarjeta = usuario.tarjetas.find {
-                it.nombre.equals(tipo, ignoreCase = true) &&
+                it.nombre.equals(
+                    tipo,
+                    ignoreCase = true
+                ) &&
                         it.numero == numeroLimpio
             }
 
@@ -239,16 +289,50 @@ class CardsActivity : AppCompatActivity() {
             val position =
                 usuario.tarjetas.indexOf(tarjeta)
 
-            usuario.tarjetas.removeAt(position)
+            lifecycleScope.launch {
 
-            cardAdapter.notifyItemRemoved(position)
+                // Eliminar primero de Room
+                val eliminada =
+                    userController.eliminarTarjeta(
+                        usuario = usuario,
+                        tarjeta = tarjeta
+                    )
 
-            etCardType.text.clear()
-            etCardNumber.text.clear()
+                if (eliminada) {
+
+                    // Solo después de eliminar correctamente
+                    // sincronizamos la sesión en memoria.
+                    usuario.tarjetas.removeAt(position)
+
+                    cardAdapter.notifyItemRemoved(
+                        position
+                    )
+
+                    etCardType.text.clear()
+                    etCardNumber.text.clear()
+
+                    Toast.makeText(
+                        this@CardsActivity,
+                        "Tarjeta eliminada correctamente",
+                        Toast.LENGTH_SHORT
+                    ).show()
+
+                } else {
+
+                    Toast.makeText(
+                        this@CardsActivity,
+                        "No se pudo eliminar la tarjeta",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
+            }
         }
 
 
-        // Volver
+        // =================================================
+        // VOLVER
+        // =================================================
+
         ivBackArrow.setOnClickListener {
             finish()
         }

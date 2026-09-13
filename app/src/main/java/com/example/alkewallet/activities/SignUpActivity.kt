@@ -7,16 +7,19 @@ import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.lifecycleScope
 import com.example.alkewallet.R
 import com.example.alkewallet.controller.UserController
 import com.example.alkewallet.model.Cuenta
-import com.example.alkewallet.model.FakeDatabase
 import com.example.alkewallet.model.Usuario
 import com.example.alkewallet.utils.Validator
+import kotlinx.coroutines.launch
 
 class SignUpActivity : AppCompatActivity() {
 
-    private val userController = UserController()
+    private val userController by lazy {
+        UserController(this)
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -81,48 +84,64 @@ class SignUpActivity : AppCompatActivity() {
                 return@setOnClickListener
             }
 
-            // Número de cuenta interno
-            val numeroCuenta =
-                "CTA${FakeDatabase.usuarios.size + 1000}"
+            lifecycleScope.launch {
 
-            val cuenta = Cuenta(
-                numero = numeroCuenta,
-                saldo = 0.0,
-                movimientos = mutableListOf()
-            )
+                // Número de cuenta temporal.
+                // Más adelante reemplazaremos esta generación
+                // por una estrategia definitiva.
+                val numeroCuenta =
+                    "CTA${System.currentTimeMillis()}"
 
-            val usuario = Usuario(
-                id = FakeDatabase.usuarios.size + 1,
-                nombre = nombre,
-                apellido = apellido,
-                correo = correo,
-                password = password,
+                val cuenta = Cuenta(
+                    numero = numeroCuenta,
+                    saldo = 0.0,
+                    movimientos = mutableListOf()
+                )
 
-                // Sin imagen personalizada todavía.
-                // La interfaz mostrará user_default.
-                imagenPerfil = null,
+                val usuario = Usuario(
+                    id = 0,
+                    nombre = nombre,
+                    apellido = apellido,
+                    correo = correo,
+                    password = password,
 
-                // UserController generará el ALKE aleatorio.
-                alkeNumero = "",
+                    // Sin imagen personalizada todavía.
+                    // La interfaz mostrará user_default.
+                    imagenPerfil = null,
 
-                cuenta = cuenta
-            )
+                    // UserController generará el ALKE aleatorio.
+                    alkeNumero = "",
 
-            userController.crearUsuario(usuario)
+                    cuenta = cuenta
+                )
 
-            Toast.makeText(
-                this,
-                "Cuenta creada correctamente",
-                Toast.LENGTH_SHORT
-            ).show()
+                userController.crearUsuario(usuario)
 
-            startActivity(Intent(this, LoginActivity::class.java))
-            finish()
+                Toast.makeText(
+                    this@SignUpActivity,
+                    "Cuenta creada correctamente",
+                    Toast.LENGTH_SHORT
+                ).show()
+
+                startActivity(
+                    Intent(
+                        this@SignUpActivity,
+                        LoginActivity::class.java
+                    )
+                )
+
+                finish()
+            }
         }
 
         // Ya tiene cuenta → Login
         tvYaTieneCuenta.setOnClickListener {
-            startActivity(Intent(this, LoginActivity::class.java))
+            startActivity(
+                Intent(
+                    this,
+                    LoginActivity::class.java
+                )
+            )
             finish()
         }
     }

@@ -1,16 +1,25 @@
 package com.example.alkewallet.controller
 
+import android.content.Context
 import com.example.alkewallet.model.Usuario
 
-class LoginController {
+class LoginController(context: Context) {
 
-    private val userController = UserController()
+    private val userController =
+        UserController(context)
 
-    fun login(correo: String, password: String): Usuario? {
+    suspend fun login(
+        correo: String,
+        password: String
+    ): Usuario? {
 
-        val usuario = userController.buscarUsuario(correo)
+        val usuario =
+            userController.buscarUsuario(correo)
 
-        return if (usuario != null && usuario.password == password) {
+        return if (
+            usuario != null &&
+            usuario.password == password
+        ) {
             usuario
         } else {
             null

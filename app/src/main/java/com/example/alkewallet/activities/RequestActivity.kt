@@ -1,5 +1,6 @@
 package com.example.alkewallet.activities
 
+
 import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
@@ -8,19 +9,26 @@ import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.lifecycleScope
 import com.example.alkewallet.R
 import com.example.alkewallet.controller.UserController
 import com.example.alkewallet.utils.SessionManager
+import kotlinx.coroutines.launch
 
 class RequestActivity : AppCompatActivity() {
 
-    private val userController = UserController()
+    private val userController by lazy {
+        UserController(this)
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_request)
 
+        // =================================================
         // Usuario actual
+        // =================================================
+
         val usuario = SessionManager.usuarioActual
 
         if (usuario == null) {
@@ -28,7 +36,10 @@ class RequestActivity : AppCompatActivity() {
             return
         }
 
+        // =================================================
         // Referencias
+        // =================================================
+
         val ivBackArrow =
             findViewById<ImageView>(R.id.ivBackArrow)
 
@@ -47,23 +58,25 @@ class RequestActivity : AppCompatActivity() {
         val btnRequest =
             findViewById<Button>(R.id.btnRequest)
 
-
+        // =================================================
         // Datos de la tarjeta seleccionada
+        // =================================================
+
         val cardType =
             intent.getStringExtra("card_type")
 
         val cardNumber =
             intent.getStringExtra("card_number")
 
+        // =================================================
+        // Buscar tarjeta del usuario
+        // =================================================
 
-        // Buscar tarjeta original del usuario
         val tarjeta = usuario.tarjetas.find {
             it.nombre == cardType &&
                     it.numero == cardNumber
         }
 
-
-        // Si no existe la tarjeta, volver
         if (tarjeta == null) {
 
             Toast.makeText(
@@ -76,32 +89,48 @@ class RequestActivity : AppCompatActivity() {
             return
         }
 
-
+        // =================================================
         // Mostrar tarjeta seleccionada
+        // =================================================
+
         tvCardName.text = tarjeta.nombre
         tvCardNum.text = tarjeta.numero
 
-
+        // =================================================
         // Regresar al Home
+        // =================================================
+
         ivBackArrow.setOnClickListener {
 
             startActivity(
-                Intent(this, HomeActivity::class.java)
+                Intent(
+                    this,
+                    HomeActivity::class.java
+                )
             )
 
             finish()
         }
 
+        // =================================================
+        // INGRESAR DINERO
+        // =================================================
 
-        // Ingresar dinero
         btnRequest.setOnClickListener {
 
             val montoTexto =
-                etMountOutput.text.toString().trim()
+                etMountOutput.text
+                    .toString()
+                    .trim()
 
             val nota =
-                etTransferNote.text.toString().trim()
+                etTransferNote.text
+                    .toString()
+                    .trim()
 
+            // ---------------------------------------------
+            // Validar monto vacío
+            // ---------------------------------------------
 
             if (montoTexto.isEmpty()) {
 
@@ -114,10 +143,12 @@ class RequestActivity : AppCompatActivity() {
                 return@setOnClickListener
             }
 
+            // ---------------------------------------------
+            // Convertir monto
+            // ---------------------------------------------
 
             val monto =
                 montoTexto.toDoubleOrNull()
-
 
             if (monto == null || monto <= 0) {
 
@@ -130,8 +161,10 @@ class RequestActivity : AppCompatActivity() {
                 return@setOnClickListener
             }
 
-
+            // ---------------------------------------------
             // Verificar saldo disponible de la tarjeta
+            // ---------------------------------------------
+
             if (monto > tarjeta.saldo) {
 
                 Toast.makeText(
@@ -143,46 +176,45 @@ class RequestActivity : AppCompatActivity() {
                 return@setOnClickListener
             }
 
+            // ---------------------------------------------
+            // Ejecutar operación Room
+            // ---------------------------------------------
 
-            // Descontar dinero de la tarjeta
-            tarjeta.saldo -= monto
+            lifecycleScope.launch {
 
+                val ingresoRealizado =
+                    userController.ingresarDinero(
+                        usuario = usuario,
+                        monto = monto,
+                        tarjeta = tarjeta,
+                        nota = nota.ifBlank { null }
+                    )
 
-            // Ingresar dinero a la wallet
-            val ingresoRealizado =
-                userController.ingresarDinero(
-                    usuario = usuario,
-                    monto = monto,
-                    tarjeta = tarjeta,
-                    nota = nota.ifBlank { null }
-                )
+                if (ingresoRealizado) {
 
+                    Toast.makeText(
+                        this@RequestActivity,
+                        "Dinero ingresado correctamente",
+                        Toast.LENGTH_SHORT
+                    ).show()
 
-            if (ingresoRealizado) {
+                    startActivity(
+                        Intent(
+                            this@RequestActivity,
+                            HomeActivity::class.java
+                        )
+                    )
 
-                Toast.makeText(
-                    this,
-                    "Dinero ingresado correctamente",
-                    Toast.LENGTH_SHORT
-                ).show()
+                    finish()
 
-                startActivity(
-                    Intent(this, HomeActivity::class.java)
-                )
+                } else {
 
-                finish()
-
-            } else {
-
-                // Si la operación falla,
-                // devolver el saldo a la tarjeta
-                tarjeta.saldo += monto
-
-                Toast.makeText(
-                    this,
-                    "No fue posible realizar el ingreso",
-                    Toast.LENGTH_SHORT
-                ).show()
+                    Toast.makeText(
+                        this@RequestActivity,
+                        "No fue posible realizar el ingreso",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
             }
         }
     }

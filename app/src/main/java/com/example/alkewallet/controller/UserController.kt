@@ -1,62 +1,116 @@
 package com.example.alkewallet.controller
 
-import com.example.alkewallet.model.FakeDatabase
+import android.content.Context
 import com.example.alkewallet.model.Movimiento
 import com.example.alkewallet.model.Tarjeta
 import com.example.alkewallet.model.Usuario
+import com.example.alkewallet.model.room.UserRepository
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
 import java.util.TimeZone
 
-class UserController {
+class UserController(context: Context) {
 
-    fun crearUsuario(usuario: Usuario) {
+    private val userRepository =
+        UserRepository(context)
 
-        // Generar ALKE aleatorio y único
+    // =====================================================
+    // CREAR USUARIO
+    // =====================================================
+
+    suspend fun crearUsuario(usuario: Usuario): Int {
+
         var alkeNumero: String
 
         do {
             alkeNumero = "ALKE${(100..999).random()}"
         } while (
-            FakeDatabase.usuarios.any {
-                it.alkeNumero.equals(alkeNumero, ignoreCase = true)
-            }
+            userRepository.existeAlkeNumero(alkeNumero)
         )
 
         usuario.alkeNumero = alkeNumero
 
-        FakeDatabase.usuarios.add(usuario)
+        return userRepository.crearUsuario(usuario)
     }
 
-    fun buscarUsuario(correo: String): Usuario? {
-        return FakeDatabase.usuarios.find { it.correo == correo }
+    // =====================================================
+    // BUSCAR USUARIO POR CORREO
+    // =====================================================
+
+    suspend fun buscarUsuario(correo: String): Usuario? {
+        return userRepository.buscarPorCorreo(correo)
     }
 
-    fun editarPerfil(usuarioActualizado: Usuario): Boolean {
+    // =====================================================
+    // BUSCAR USUARIO POR ALKE
+    // =====================================================
 
-        val indice = FakeDatabase.usuarios.indexOfFirst {
-            it.id == usuarioActualizado.id
-        }
+    suspend fun buscarUsuarioPorAlke(
+        alkeNumero: String
+    ): Usuario? {
 
-        if (indice != -1) {
-            FakeDatabase.usuarios[indice] = usuarioActualizado
-            return true
-        }
-
-        return false
+        return userRepository.buscarPorAlkeNumero(
+            alkeNumero
+        )
     }
 
-    fun eliminarUsuario(id: Int): Boolean {
-        return FakeDatabase.usuarios.removeIf { it.id == id }
+    // =====================================================
+    // EDITAR PERFIL
+    // =====================================================
+
+    suspend fun editarPerfil(
+        usuarioActualizado: Usuario
+    ): Boolean {
+
+        return userRepository.actualizarUsuario(
+            usuarioActualizado
+        )
     }
 
+    // =====================================================
+    // ELIMINAR USUARIO
+    // =====================================================
+
+    suspend fun eliminarUsuario(id: Int): Boolean {
+        return userRepository.eliminarUsuario(id)
+    }
+
+    // =====================================================
+    // AGREGAR TARJETA
+    // =====================================================
+
+    suspend fun agregarTarjeta(
+        usuario: Usuario,
+        tarjeta: Tarjeta
+    ): Boolean {
+
+        return userRepository.agregarTarjeta(
+            usuarioId = usuario.id,
+            tarjeta = tarjeta
+        )
+    }
+
+    // =====================================================
+    // ELIMINAR TARJETA
+    // =====================================================
+
+    suspend fun eliminarTarjeta(
+        usuario: Usuario,
+        tarjeta: Tarjeta
+    ): Boolean {
+
+        return userRepository.eliminarTarjeta(
+            usuarioId = usuario.id,
+            numero = tarjeta.numero
+        )
+    }
 
     // =====================================================
     // INGRESAR DINERO DESDE TARJETA
     // =====================================================
 
-    fun ingresarDinero(
+    suspend fun ingresarDinero(
         usuario: Usuario,
         monto: Double,
         tarjeta: Tarjeta,
@@ -67,7 +121,12 @@ class UserController {
             return false
         }
 
-        usuario.cuenta.saldo += monto
+        val descripcionMovimiento =
+            if (!nota.isNullOrBlank()) {
+                nota
+            } else {
+                "${tarjeta.nombre} •••• ${tarjeta.numero.takeLast(4)}"
+            }
 
         val formatoFecha = SimpleDateFormat(
             "dd MMM, HH:mm",
@@ -77,32 +136,44 @@ class UserController {
         formatoFecha.timeZone =
             TimeZone.getTimeZone("America/Santiago")
 
-        val descripcionMovimiento =
-            if (!nota.isNullOrBlank()) {
-                nota
-            } else {
-                "${tarjeta.nombre} •••• ${tarjeta.numero.takeLast(4)}"
-            }
+        val fechaActual =
+            formatoFecha.format(Date())
 
-        val movimiento = Movimiento(
-            tipo = "ingreso",
-            monto = monto,
-            fecha = formatoFecha.format(Date()),
-            descripcion = descripcionMovimiento,
-            usuarioRelacionado = null
+        val ingresoRealizado =
+            userRepository.ingresarDinero(
+                usuarioId = usuario.id,
+                tarjetaNumero = tarjeta.numero,
+                monto = monto,
+                fecha = fechaActual,
+                descripcion = descripcionMovimiento
+            )
+
+        if (!ingresoRealizado) {
+            return false
+        }
+
+        // Actualizar la sesión en memoria
+        usuario.cuenta.saldo += monto
+        tarjeta.saldo -= monto
+
+        usuario.cuenta.movimientos.add(
+            Movimiento(
+                tipo = "ingreso",
+                monto = monto,
+                fecha = fechaActual,
+                descripcion = descripcionMovimiento,
+                usuarioRelacionado = null
+            )
         )
-
-        usuario.cuenta.movimientos.add(movimiento)
 
         return true
     }
-
 
     // =====================================================
     // TRANSFERIR DINERO
     // =====================================================
 
-    fun transferirDinero(
+    suspend fun transferirDinero(
         emisor: Usuario,
         destinatario: Usuario,
         monto: Double,
@@ -117,9 +188,12 @@ class UserController {
             return false
         }
 
-        if (monto > emisor.cuenta.saldo) {
-            return false
-        }
+        val descripcionMovimiento =
+            if (!nota.isNullOrBlank()) {
+                nota
+            } else {
+                "Transferencia"
+            }
 
         val formatoFecha = SimpleDateFormat(
             "dd MMM, HH:mm",
@@ -129,44 +203,59 @@ class UserController {
         formatoFecha.timeZone =
             TimeZone.getTimeZone("America/Santiago")
 
-        val fechaActual = formatoFecha.format(Date())
+        val fechaActual =
+            formatoFecha.format(Date())
 
-        val descripcionMovimiento =
-            if (!nota.isNullOrBlank()) {
-                nota
-            } else {
-                "Transferencia"
-            }
+        val transferenciaRealizada =
+            userRepository.transferirDinero(
+                emisorId = emisor.id,
+                destinatarioId = destinatario.id,
+                monto = monto,
+                fecha = fechaActual,
+                descripcion = descripcionMovimiento
+            )
+
+        if (!transferenciaRealizada) {
+            return false
+        }
+
+        // =================================================
+        // Sincronizar sesión del emisor
+        // =================================================
 
         emisor.cuenta.saldo -= monto
-        destinatario.cuenta.saldo += monto
-
-        val movimientoEnviado = Movimiento(
-            tipo = "transferencia enviada",
-            monto = monto,
-            fecha = fechaActual,
-            descripcion = descripcionMovimiento,
-            usuarioRelacionado =
-                "${destinatario.nombre} ${destinatario.apellido}"
-        )
-
-        val movimientoRecibido = Movimiento(
-            tipo = "transferencia recibida",
-            monto = monto,
-            fecha = fechaActual,
-            descripcion = descripcionMovimiento,
-            usuarioRelacionado =
-                "${emisor.nombre} ${emisor.apellido}"
-        )
 
         emisor.cuenta.movimientos.add(
-            movimientoEnviado
+            Movimiento(
+                tipo = "transferencia enviada",
+                monto = monto,
+                fecha = fechaActual,
+                descripcion = descripcionMovimiento,
+                usuarioRelacionado =
+                    "${destinatario.nombre} ${destinatario.apellido}"
+            )
         )
 
+        // =================================================
+        // Sincronizar sesión del destinatario
+        // =================================================
+
+        destinatario.cuenta.saldo += monto
+
         destinatario.cuenta.movimientos.add(
-            movimientoRecibido
+            Movimiento(
+                tipo = "transferencia recibida",
+                monto = monto,
+                fecha = fechaActual,
+                descripcion = descripcionMovimiento,
+                usuarioRelacionado =
+                    "${emisor.nombre} ${emisor.apellido}"
+            )
         )
 
         return true
     }
 }
+
+
+
