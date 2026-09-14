@@ -26,39 +26,52 @@ class SplashActivity : AppCompatActivity() {
         }, 2000)
         lifecycleScope.launch {
             try {
-                val usuario =
+
+                val transferencia =
                     ApiTestController(this@SplashActivity)
-                        .buscarUsuarioPorCorreo(
-                            "drgoku@ninoguero.com"
+                        .probarTransferencia(
+                            "ALKE121",
+                            "ALKE981",
+                            10000.0
                         )
 
-                if (usuario != null) {
+                if (transferencia != null) {
 
                     Log.d(
                         "API_TEST",
-                        "Usuario encontrado: ${usuario.nombre} ${usuario.apellido}"
+                        "Transferencia creada correctamente"
                     )
 
                     Log.d(
                         "API_TEST",
-                        "Correo: ${usuario.correo}"
+                        "Emisor: ${transferencia.senderAlkeNumero}"
                     )
 
                     Log.d(
                         "API_TEST",
-                        "ALKE: ${usuario.alkeNumero}"
+                        "Destinatario: ${transferencia.receiverAlkeNumero}"
+                    )
+
+                    Log.d(
+                        "API_TEST",
+                        "Monto: ${transferencia.amount}"
                     )
 
                 } else {
 
                     Log.d(
                         "API_TEST",
-                        "Usuario no encontrado"
+                        "No se pudo crear la transferencia"
                     )
                 }
 
             } catch (e: Exception) {
-                Log.e("API_TEST", "Error conectando con API", e)
+
+                Log.e(
+                    "API_TEST",
+                    "Error creando transferencia",
+                    e
+                )
             }
         }
     }

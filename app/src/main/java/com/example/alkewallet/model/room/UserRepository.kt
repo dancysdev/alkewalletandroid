@@ -12,6 +12,7 @@ import com.example.alkewallet.model.room.entity.TarjetaEntity
 import com.example.alkewallet.model.room.entity.UsuarioEntity
 import com.example.alkewallet.api.RetrofitClient
 import com.example.alkewallet.api.dto.UsuarioDto
+import com.example.alkewallet.api.dto.TransferenciaDto
 
 class UserRepository(context: Context) {
 
@@ -116,6 +117,57 @@ class UserRepository(context: Context) {
         return apiService
             .buscarUsuarioPorCorreo(correo)
             .firstOrNull()
+    }
+    suspend fun buscarUsuarioRemotoPorAlke(
+        alkeNumero: String
+    ): UsuarioDto? {
+
+        return apiService
+            .obtenerUsuarios()
+            .firstOrNull {
+                it.alkeNumero == alkeNumero
+            }
+    }
+    suspend fun crearTransferenciaRemota(
+        transferencia: TransferenciaDto
+    ): TransferenciaDto {
+
+        return apiService.crearTransferencia(
+            transferencia
+        )
+    }
+    suspend fun probarTransferenciaRemota(
+        emisorAlke: String,
+        destinatarioAlke: String,
+        monto: Double
+    ): TransferenciaDto? {
+
+        val emisor =
+            buscarUsuarioRemotoPorAlke(emisorAlke)
+                ?: return null
+
+        val destinatario =
+            buscarUsuarioRemotoPorAlke(destinatarioAlke)
+                ?: return null
+
+        val transferencia =
+            TransferenciaDto(
+                senderId = emisor.id,
+                receiverId = destinatario.id,
+                senderAlkeNumero = emisor.alkeNumero,
+                receiverAlkeNumero = destinatario.alkeNumero,
+                amount = monto,
+                type = "TRANSFER"
+            )
+
+        return crearTransferenciaRemota(
+            transferencia
+        )
+    }
+    suspend fun crearUsuarioRemoto(
+        usuario: UsuarioDto
+    ): UsuarioDto {
+        return apiService.crearUsuario(usuario)
     }
 
     private suspend fun construirUsuario(

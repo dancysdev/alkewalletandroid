@@ -11,4 +11,14 @@ class ApiTestController(context: Context) {
     suspend fun buscarUsuarioPorCorreo(
         correo: String
     ) = repository.buscarUsuarioRemotoPorCorreo(correo)
+
+    suspend fun probarTransferencia(
+        emisorAlke: String,
+        destinatarioAlke: String,
+        monto: Double
+    ) = repository.probarTransferenciaRemota(
+        emisorAlke,
+        destinatarioAlke,
+        monto
+    )
 }

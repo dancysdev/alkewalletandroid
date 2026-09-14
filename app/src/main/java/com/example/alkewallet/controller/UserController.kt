@@ -31,7 +31,27 @@ class UserController(context: Context) {
 
         usuario.alkeNumero = alkeNumero
 
-        return userRepository.crearUsuario(usuario)
+        val usuarioId =
+            userRepository.crearUsuario(usuario)
+
+        val usuarioDto =
+            com.example.alkewallet.api.dto.UsuarioDto(
+                id = "",
+                nombre = usuario.nombre,
+                apellido = usuario.apellido,
+                correo = usuario.correo,
+                password = usuario.password,
+                imagenPerfil = usuario.imagenPerfil,
+                alkeNumero = usuario.alkeNumero,
+                cuentaNumero = usuario.cuenta.numero,
+                saldo = usuario.cuenta.saldo
+            )
+
+        userRepository.crearUsuarioRemoto(
+            usuarioDto
+        )
+
+        return usuarioId
     }
 
     // =====================================================
