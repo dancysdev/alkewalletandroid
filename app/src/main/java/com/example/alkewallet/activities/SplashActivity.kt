@@ -7,6 +7,11 @@ import android.os.Looper
 import androidx.appcompat.app.AppCompatActivity
 import com.example.alkewallet.R
 
+import android.util.Log
+import androidx.lifecycle.lifecycleScope
+import com.example.alkewallet.controller.ApiTestController
+import kotlinx.coroutines.launch
+
 class SplashActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -19,5 +24,42 @@ class SplashActivity : AppCompatActivity() {
             finish()
 
         }, 2000)
+        lifecycleScope.launch {
+            try {
+                val usuario =
+                    ApiTestController(this@SplashActivity)
+                        .buscarUsuarioPorCorreo(
+                            "drgoku@ninoguero.com"
+                        )
+
+                if (usuario != null) {
+
+                    Log.d(
+                        "API_TEST",
+                        "Usuario encontrado: ${usuario.nombre} ${usuario.apellido}"
+                    )
+
+                    Log.d(
+                        "API_TEST",
+                        "Correo: ${usuario.correo}"
+                    )
+
+                    Log.d(
+                        "API_TEST",
+                        "ALKE: ${usuario.alkeNumero}"
+                    )
+
+                } else {
+
+                    Log.d(
+                        "API_TEST",
+                        "Usuario no encontrado"
+                    )
+                }
+
+            } catch (e: Exception) {
+                Log.e("API_TEST", "Error conectando con API", e)
+            }
+        }
     }
 }

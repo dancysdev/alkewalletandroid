@@ -10,11 +10,16 @@ import com.example.alkewallet.model.room.entity.CuentaEntity
 import com.example.alkewallet.model.room.entity.MovimientoEntity
 import com.example.alkewallet.model.room.entity.TarjetaEntity
 import com.example.alkewallet.model.room.entity.UsuarioEntity
+import com.example.alkewallet.api.RetrofitClient
+import com.example.alkewallet.api.dto.UsuarioDto
 
 class UserRepository(context: Context) {
 
     private val database =
         DatabaseProvider.getDatabase(context)
+
+    private val apiService =
+        RetrofitClient.apiService
 
     private val usuarioDao =
         database.usuarioDao()
@@ -100,6 +105,17 @@ class UserRepository(context: Context) {
         return construirUsuario(
             usuarioEntity
         )
+    }
+    suspend fun obtenerUsuariosRemotos(): List<UsuarioDto> {
+        return apiService.obtenerUsuarios()
+    }
+    suspend fun buscarUsuarioRemotoPorCorreo(
+        correo: String
+    ): UsuarioDto? {
+
+        return apiService
+            .buscarUsuarioPorCorreo(correo)
+            .firstOrNull()
     }
 
     private suspend fun construirUsuario(
