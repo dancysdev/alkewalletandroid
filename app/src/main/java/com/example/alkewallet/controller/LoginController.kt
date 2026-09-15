@@ -1,7 +1,6 @@
 package com.example.alkewallet.controller
 
 import android.content.Context
-import com.example.alkewallet.model.Cuenta
 import com.example.alkewallet.model.Usuario
 import com.example.alkewallet.model.room.UserRepository
 
@@ -25,14 +24,32 @@ class LoginController(context: Context) {
 
         val usuarioLocal =
             repository.buscarPorCorreo(correo)
-                ?: return null
+
+        if (usuarioLocal == null) {
+            return repository.crearUsuarioLocalDesdeRemoto(
+                usuarioRemoto
+            )
+        }
+        val saldoRemoto =
+            usuarioRemoto.saldo
+
+        repository.actualizarCuenta(
+            usuarioId = usuarioLocal.id,
+            saldo = saldoRemoto
+        )
+
+        val cuentaActualizada =
+            usuarioLocal.cuenta.copy(
+                saldo = saldoRemoto
+            )
 
         return usuarioLocal.copy(
             nombre = usuarioRemoto.nombre,
             apellido = usuarioRemoto.apellido,
             correo = usuarioRemoto.correo,
             password = usuarioRemoto.password,
-            alkeNumero = usuarioRemoto.alkeNumero
+            alkeNumero = usuarioRemoto.alkeNumero,
+            cuenta = cuentaActualizada
         )
     }
 }

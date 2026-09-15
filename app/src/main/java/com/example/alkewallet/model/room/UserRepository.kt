@@ -78,6 +78,59 @@ class UserRepository(context: Context) {
 
         return usuarioId
     }
+    suspend fun crearUsuarioLocalDesdeRemoto(
+        usuarioRemoto: UsuarioDto
+    ): Usuario {
+
+        return database.withTransaction {
+
+            val usuarioEntity =
+                UsuarioEntity(
+                    remoteId = usuarioRemoto.id.toIntOrNull(),
+                    nombre = usuarioRemoto.nombre,
+                    apellido = usuarioRemoto.apellido,
+                    correo = usuarioRemoto.correo,
+                    password = usuarioRemoto.password,
+                    imagenPerfil = usuarioRemoto.imagenPerfil,
+                    alkeNumero = usuarioRemoto.alkeNumero
+                )
+
+            val usuarioId =
+                usuarioDao.insertar(
+                    usuarioEntity
+                ).toInt()
+
+            val cuentaEntity =
+                CuentaEntity(
+                    usuarioId = usuarioId,
+                    numero = usuarioRemoto.cuentaNumero,
+                    saldo = usuarioRemoto.saldo,
+                    remoteId = null
+                )
+
+            cuentaDao.insertar(
+                cuentaEntity
+            )
+
+            construirUsuario(
+                usuarioDao.buscarPorId(usuarioId)
+                    ?: return@withTransaction Usuario(
+                        id = usuarioId,
+                        nombre = usuarioRemoto.nombre,
+                        apellido = usuarioRemoto.apellido,
+                        correo = usuarioRemoto.correo,
+                        password = usuarioRemoto.password,
+                        imagenPerfil = usuarioRemoto.imagenPerfil,
+                        alkeNumero = usuarioRemoto.alkeNumero,
+                        cuenta = Cuenta(
+                            numero = usuarioRemoto.cuentaNumero,
+                            saldo = usuarioRemoto.saldo,
+                            movimientos = mutableListOf()
+                        )
+                    )
+            )
+        }
+    }
 
 
     suspend fun existeAlkeNumero(
