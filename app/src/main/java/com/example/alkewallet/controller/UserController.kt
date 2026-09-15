@@ -1,10 +1,12 @@
 package com.example.alkewallet.controller
 
 import android.content.Context
+import com.example.alkewallet.api.dto.UsuarioDto
 import com.example.alkewallet.model.Movimiento
 import com.example.alkewallet.model.Tarjeta
 import com.example.alkewallet.model.Usuario
 import com.example.alkewallet.model.room.UserRepository
+import com.example.alkewallet.model.room.entity.ContactoEntity
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
@@ -35,7 +37,7 @@ class UserController(context: Context) {
             userRepository.crearUsuario(usuario)
 
         val usuarioDto =
-            com.example.alkewallet.api.dto.UsuarioDto(
+            UsuarioDto(
                 id = "",
                 nombre = usuario.nombre,
                 apellido = usuario.apellido,
@@ -54,13 +56,18 @@ class UserController(context: Context) {
         return usuarioId
     }
 
+
     // =====================================================
     // BUSCAR USUARIO POR CORREO
     // =====================================================
 
     suspend fun buscarUsuario(correo: String): Usuario? {
-        return userRepository.buscarPorCorreo(correo)
+
+        return userRepository.buscarPorCorreo(
+            correo
+        )
     }
+
 
     // =====================================================
     // BUSCAR USUARIO POR ALKE
@@ -75,6 +82,61 @@ class UserController(context: Context) {
         )
     }
 
+
+    // =====================================================
+    // CONTACTOS
+    // =====================================================
+
+    suspend fun buscarUsuarioRemotoPorAlke(
+        alkeNumero: String
+    ): UsuarioDto? {
+
+        return userRepository.buscarUsuarioRemotoPorAlke(
+            alkeNumero
+        )
+    }
+
+
+    suspend fun listarContactos(
+        usuarioId: Int
+    ): List<ContactoEntity> {
+
+        return userRepository.listarContactos(
+            usuarioId
+        )
+    }
+
+
+    suspend fun agregarContacto(
+        usuarioId: Int,
+        alkeNumero: String
+    ): Boolean {
+
+        val usuarioRemoto =
+            userRepository.buscarUsuarioRemotoPorAlke(
+                alkeNumero
+            )
+                ?: return false
+
+        return userRepository.agregarContacto(
+            usuarioId = usuarioId,
+            usuarioRemoto = usuarioRemoto
+        )
+    }
+
+
+    suspend fun eliminarContacto(
+        usuarioId: Int,
+        alkeNumero: String
+    ): Boolean {
+
+        return userRepository.eliminarContacto(
+            usuarioId = usuarioId,
+            alkeNumero = alkeNumero
+        )
+    }
+
+
     // =====================================================
     // EDITAR PERFIL
     // =====================================================
@@ -88,13 +150,20 @@ class UserController(context: Context) {
         )
     }
 
+
     // =====================================================
     // ELIMINAR USUARIO
     // =====================================================
 
-    suspend fun eliminarUsuario(id: Int): Boolean {
-        return userRepository.eliminarUsuario(id)
+    suspend fun eliminarUsuario(
+        id: Int
+    ): Boolean {
+
+        return userRepository.eliminarUsuario(
+            id
+        )
     }
+
 
     // =====================================================
     // AGREGAR TARJETA
@@ -111,6 +180,7 @@ class UserController(context: Context) {
         )
     }
 
+
     // =====================================================
     // ELIMINAR TARJETA
     // =====================================================
@@ -125,6 +195,7 @@ class UserController(context: Context) {
             numero = tarjeta.numero
         )
     }
+
 
     // =====================================================
     // INGRESAR DINERO DESDE TARJETA
@@ -159,6 +230,39 @@ class UserController(context: Context) {
         val fechaActual =
             formatoFecha.format(Date())
 
+        // =========================================================
+        // ACTUALIZAR SALDO REMOTO
+        // =========================================================
+
+        val usuarioRemoto =
+            try {
+                userRepository.buscarUsuarioRemotoPorAlke(
+                    usuario.alkeNumero
+                )
+            } catch (e: Exception) {
+                return false
+            }
+
+        if (usuarioRemoto == null) {
+            return false
+        }
+
+        val nuevoSaldoRemoto =
+            usuarioRemoto.saldo + monto
+
+        try {
+            userRepository.actualizarSaldoRemoto(
+                usuarioIdRemoto = usuarioRemoto.id,
+                nuevoSaldo = nuevoSaldoRemoto
+            )
+        } catch (e: Exception) {
+            return false
+        }
+
+        // =========================================================
+        // ACTUALIZAR PERSISTENCIA LOCAL
+        // =========================================================
+
         val ingresoRealizado =
             userRepository.ingresarDinero(
                 usuarioId = usuario.id,
@@ -172,7 +276,10 @@ class UserController(context: Context) {
             return false
         }
 
-        // Actualizar la sesión en memoria
+        // =========================================================
+        // ACTUALIZAR OBJETO EN MEMORIA
+        // =========================================================
+
         usuario.cuenta.saldo += monto
         tarjeta.saldo -= monto
 
@@ -188,6 +295,7 @@ class UserController(context: Context) {
 
         return true
     }
+
 
     // =====================================================
     // TRANSFERIR DINERO
@@ -226,6 +334,95 @@ class UserController(context: Context) {
         val fechaActual =
             formatoFecha.format(Date())
 
+        // =========================================================
+        // BUSCAR USUARIOS EN EL BACKEND
+        // =========================================================
+
+        val emisorRemoto =
+            try {
+                userRepository.buscarUsuarioRemotoPorAlke(
+                    emisor.alkeNumero
+                )
+            } catch (e: Exception) {
+                return false
+            }
+
+        val destinatarioRemoto =
+            try {
+                userRepository.buscarUsuarioRemotoPorAlke(
+                    destinatario.alkeNumero
+                )
+            } catch (e: Exception) {
+                return false
+            }
+
+        if (emisorRemoto == null || destinatarioRemoto == null) {
+            return false
+        }
+
+        // =========================================================
+        // VALIDAR SALDO REMOTO
+        // =========================================================
+
+        if (monto > emisorRemoto.saldo) {
+            return false
+        }
+
+        val nuevoSaldoEmisor =
+            emisorRemoto.saldo - monto
+
+        val nuevoSaldoDestinatario =
+            destinatarioRemoto.saldo + monto
+
+        // =========================================================
+        // ACTUALIZAR SALDO DEL EMISOR EN BACKEND
+        // =========================================================
+
+        try {
+            userRepository.actualizarSaldoRemoto(
+                usuarioIdRemoto = emisorRemoto.id,
+                nuevoSaldo = nuevoSaldoEmisor
+            )
+        } catch (e: Exception) {
+            return false
+        }
+
+        // =========================================================
+        // ACTUALIZAR SALDO DEL DESTINATARIO EN BACKEND
+        // =========================================================
+
+        try {
+            userRepository.actualizarSaldoRemoto(
+                usuarioIdRemoto = destinatarioRemoto.id,
+                nuevoSaldo = nuevoSaldoDestinatario
+            )
+        } catch (e: Exception) {
+            return false
+        }
+
+        // =========================================================
+        // REGISTRAR TRANSFERENCIA EN BACKEND
+        // =========================================================
+
+        val transferenciaRemota =
+            try {
+                userRepository.probarTransferenciaRemota(
+                    emisorAlke = emisor.alkeNumero,
+                    destinatarioAlke = destinatario.alkeNumero,
+                    monto = monto
+                )
+            } catch (e: Exception) {
+                return false
+            }
+
+        if (transferenciaRemota == null) {
+            return false
+        }
+
+        // =========================================================
+        // ACTUALIZAR ROOM
+        // =========================================================
+
         val transferenciaRealizada =
             userRepository.transferirDinero(
                 emisorId = emisor.id,
@@ -239,9 +436,9 @@ class UserController(context: Context) {
             return false
         }
 
-        // =================================================
-        // Sincronizar sesión del emisor
-        // =================================================
+        // =========================================================
+        // ACTUALIZAR OBJETOS EN MEMORIA
+        // =========================================================
 
         emisor.cuenta.saldo -= monto
 
@@ -255,10 +452,6 @@ class UserController(context: Context) {
                     "${destinatario.nombre} ${destinatario.apellido}"
             )
         )
-
-        // =================================================
-        // Sincronizar sesión del destinatario
-        // =================================================
 
         destinatario.cuenta.saldo += monto
 
@@ -276,6 +469,3 @@ class UserController(context: Context) {
         return true
     }
 }
-
-
-

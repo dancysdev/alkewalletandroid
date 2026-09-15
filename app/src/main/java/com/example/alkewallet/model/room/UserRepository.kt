@@ -2,17 +2,19 @@ package com.example.alkewallet.model.room
 
 import android.content.Context
 import androidx.room.withTransaction
+import com.example.alkewallet.api.RetrofitClient
+import com.example.alkewallet.api.dto.TransferenciaDto
+import com.example.alkewallet.api.dto.UsuarioDto
 import com.example.alkewallet.model.Cuenta
 import com.example.alkewallet.model.Movimiento
 import com.example.alkewallet.model.Tarjeta
 import com.example.alkewallet.model.Usuario
+import com.example.alkewallet.model.room.entity.ContactoEntity
 import com.example.alkewallet.model.room.entity.CuentaEntity
 import com.example.alkewallet.model.room.entity.MovimientoEntity
 import com.example.alkewallet.model.room.entity.TarjetaEntity
 import com.example.alkewallet.model.room.entity.UsuarioEntity
-import com.example.alkewallet.api.RetrofitClient
-import com.example.alkewallet.api.dto.UsuarioDto
-import com.example.alkewallet.api.dto.TransferenciaDto
+
 
 class UserRepository(context: Context) {
 
@@ -33,6 +35,14 @@ class UserRepository(context: Context) {
 
     private val movimientoDao =
         database.movimientoDao()
+
+    private val contactoDao =
+        database.contactoDao()
+
+
+    // =========================================================
+    // USUARIOS LOCALES
+    // =========================================================
 
     suspend fun crearUsuario(
         usuario: Usuario
@@ -69,6 +79,7 @@ class UserRepository(context: Context) {
         return usuarioId
     }
 
+
     suspend fun existeAlkeNumero(
         alkeNumero: String
     ): Boolean {
@@ -77,6 +88,7 @@ class UserRepository(context: Context) {
             alkeNumero
         ) != null
     }
+
 
     suspend fun buscarPorCorreo(
         correo: String
@@ -93,6 +105,7 @@ class UserRepository(context: Context) {
         )
     }
 
+
     suspend fun buscarPorAlkeNumero(
         alkeNumero: String
     ): Usuario? {
@@ -107,9 +120,18 @@ class UserRepository(context: Context) {
             usuarioEntity
         )
     }
+
+
+    // =========================================================
+    // USUARIOS REMOTOS / API
+    // =========================================================
+
     suspend fun obtenerUsuariosRemotos(): List<UsuarioDto> {
+
         return apiService.obtenerUsuarios()
     }
+
+
     suspend fun buscarUsuarioRemotoPorCorreo(
         correo: String
     ): UsuarioDto? {
@@ -118,6 +140,8 @@ class UserRepository(context: Context) {
             .buscarUsuarioPorCorreo(correo)
             .firstOrNull()
     }
+
+
     suspend fun buscarUsuarioRemotoPorAlke(
         alkeNumero: String
     ): UsuarioDto? {
@@ -128,6 +152,37 @@ class UserRepository(context: Context) {
                 it.alkeNumero == alkeNumero
             }
     }
+
+
+    suspend fun crearUsuarioRemoto(
+        usuario: UsuarioDto
+    ): UsuarioDto {
+
+        return apiService.crearUsuario(
+            usuario
+        )
+    }
+    suspend fun actualizarSaldoRemoto(
+        usuarioIdRemoto: String,
+        nuevoSaldo: Double
+    ): UsuarioDto {
+
+        val datos =
+            mapOf(
+                "saldo" to nuevoSaldo
+            )
+
+        return apiService.actualizarSaldoUsuario(
+            id = usuarioIdRemoto,
+            datos = datos
+        )
+    }
+
+
+    // =========================================================
+    // TRANSFERENCIAS REMOTAS / API
+    // =========================================================
+
     suspend fun crearTransferenciaRemota(
         transferencia: TransferenciaDto
     ): TransferenciaDto {
@@ -136,6 +191,8 @@ class UserRepository(context: Context) {
             transferencia
         )
     }
+
+
     suspend fun probarTransferenciaRemota(
         emisorAlke: String,
         destinatarioAlke: String,
@@ -143,11 +200,15 @@ class UserRepository(context: Context) {
     ): TransferenciaDto? {
 
         val emisor =
-            buscarUsuarioRemotoPorAlke(emisorAlke)
+            buscarUsuarioRemotoPorAlke(
+                emisorAlke
+            )
                 ?: return null
 
         val destinatario =
-            buscarUsuarioRemotoPorAlke(destinatarioAlke)
+            buscarUsuarioRemotoPorAlke(
+                destinatarioAlke
+            )
                 ?: return null
 
         val transferencia =
@@ -164,11 +225,96 @@ class UserRepository(context: Context) {
             transferencia
         )
     }
-    suspend fun crearUsuarioRemoto(
-        usuario: UsuarioDto
-    ): UsuarioDto {
-        return apiService.crearUsuario(usuario)
+
+
+    // =========================================================
+    // CONTACTOS LOCALES
+    // =========================================================
+
+    suspend fun listarContactos(
+        usuarioId: Int
+    ): List<ContactoEntity> {
+
+        return contactoDao.listarPorUsuario(
+            usuarioId
+        )
     }
+
+
+    suspend fun buscarContactoPorAlke(
+        usuarioId: Int,
+        alkeNumero: String
+    ): ContactoEntity? {
+
+        return contactoDao.buscarPorAlkeNumero(
+            usuarioId = usuarioId,
+            alkeNumero = alkeNumero
+        )
+    }
+
+
+    suspend fun agregarContacto(
+        usuarioId: Int,
+        usuarioRemoto: UsuarioDto
+    ): Boolean {
+
+        val contactoExistente =
+            buscarContactoPorAlke(
+                usuarioId = usuarioId,
+                alkeNumero = usuarioRemoto.alkeNumero
+            )
+
+        if (contactoExistente != null) {
+            return false
+        }
+
+        val contacto =
+            ContactoEntity(
+                usuarioId = usuarioId,
+
+                // El modelo Room actual usa Int,
+                // mientras JSON Server usa String.
+                // Mantenemos el esquema actual sin migración.
+                contactoRemoteId =
+                    usuarioRemoto.id.hashCode(),
+
+                alkeNumero = usuarioRemoto.alkeNumero,
+                nombre = usuarioRemoto.nombre,
+                apellido = usuarioRemoto.apellido,
+                imagenPerfil = usuarioRemoto.imagenPerfil
+            )
+
+        contactoDao.insertar(
+            contacto
+        )
+
+        return true
+    }
+
+
+    suspend fun eliminarContacto(
+        usuarioId: Int,
+        alkeNumero: String
+    ): Boolean {
+
+        val contacto =
+            buscarContactoPorAlke(
+                usuarioId = usuarioId,
+                alkeNumero = alkeNumero
+            )
+                ?: return false
+
+        contactoDao.eliminar(
+            contacto
+        )
+
+        return true
+    }
+
+
+    // =========================================================
+    // CONSTRUCCIÓN DE USUARIO DESDE ROOM
+    // =========================================================
 
     private suspend fun construirUsuario(
         usuarioEntity: UsuarioEntity
@@ -202,12 +348,15 @@ class UserRepository(context: Context) {
             movimientoDao.listarPorCuenta(
                 cuentaEntity.id
             )
+
         tarjetasEntity.forEach {
+
             android.util.Log.d(
                 "ROOM_TARJETAS",
                 "Tarjeta id=${it.id}, usuarioId=${it.usuarioId}, numero=${it.numero}"
             )
         }
+
 
         val movimientos =
             movimientosEntity.map {
@@ -222,6 +371,7 @@ class UserRepository(context: Context) {
 
             }.toMutableList()
 
+
         val tarjetas =
             tarjetasEntity.map {
 
@@ -233,6 +383,7 @@ class UserRepository(context: Context) {
 
             }.toMutableList()
 
+
         return Usuario(
             id = usuarioEntity.id,
             nombre = usuarioEntity.nombre,
@@ -241,14 +392,21 @@ class UserRepository(context: Context) {
             password = usuarioEntity.password,
             imagenPerfil = usuarioEntity.imagenPerfil,
             alkeNumero = usuarioEntity.alkeNumero,
+
             cuenta = Cuenta(
                 numero = cuentaEntity.numero,
                 saldo = cuentaEntity.saldo,
                 movimientos = movimientos
             ),
+
             tarjetas = tarjetas
         )
     }
+
+
+    // =========================================================
+    // PERFIL
+    // =========================================================
 
     suspend fun actualizarUsuario(
         usuario: Usuario
@@ -277,6 +435,7 @@ class UserRepository(context: Context) {
         return true
     }
 
+
     suspend fun eliminarUsuario(
         id: Int
     ): Boolean {
@@ -293,6 +452,11 @@ class UserRepository(context: Context) {
 
         return true
     }
+
+
+    // =========================================================
+    // CUENTA
+    // =========================================================
 
     suspend fun actualizarCuenta(
         usuarioId: Int,
@@ -313,6 +477,11 @@ class UserRepository(context: Context) {
 
         return true
     }
+
+
+    // =========================================================
+    // TARJETAS
+    // =========================================================
 
     suspend fun agregarTarjeta(
         usuarioId: Int,
@@ -345,6 +514,7 @@ class UserRepository(context: Context) {
         return true
     }
 
+
     suspend fun eliminarTarjeta(
         usuarioId: Int,
         numero: String
@@ -363,6 +533,11 @@ class UserRepository(context: Context) {
 
         return true
     }
+
+
+    // =========================================================
+    // INGRESAR DINERO
+    // =========================================================
 
     suspend fun ingresarDinero(
         usuarioId: Int,
@@ -395,11 +570,13 @@ class UserRepository(context: Context) {
                 return@withTransaction false
             }
 
+
             tarjetaDao.actualizar(
                 tarjeta.copy(
                     saldo = tarjeta.saldo - monto
                 )
             )
+
 
             cuentaDao.actualizar(
                 cuenta.copy(
@@ -407,10 +584,12 @@ class UserRepository(context: Context) {
                 )
             )
 
+
             val usuarioEntity =
                 usuarioDao.buscarPorId(
                     usuarioId
                 )
+
 
             val movimiento =
                 MovimientoEntity(
@@ -425,6 +604,7 @@ class UserRepository(context: Context) {
                     descripcion = descripcion
                 )
 
+
             movimientoDao.insertar(
                 movimiento
             )
@@ -432,6 +612,11 @@ class UserRepository(context: Context) {
             true
         }
     }
+
+
+    // =========================================================
+    // TRANSFERENCIA LOCAL
+    // =========================================================
 
     suspend fun transferirDinero(
         emisorId: Int,
@@ -455,6 +640,7 @@ class UserRepository(context: Context) {
                 )
                     ?: return@withTransaction false
 
+
             if (monto <= 0) {
                 return@withTransaction false
             }
@@ -466,6 +652,7 @@ class UserRepository(context: Context) {
             if (monto > cuentaEmisor.saldo) {
                 return@withTransaction false
             }
+
 
             val emisor =
                 usuarioDao.buscarPorId(
@@ -479,6 +666,7 @@ class UserRepository(context: Context) {
                 )
                     ?: return@withTransaction false
 
+
             cuentaDao.actualizar(
                 cuentaEmisor.copy(
                     saldo =
@@ -486,12 +674,14 @@ class UserRepository(context: Context) {
                 )
             )
 
+
             cuentaDao.actualizar(
                 cuentaDestinatario.copy(
                     saldo =
                         cuentaDestinatario.saldo + monto
                 )
             )
+
 
             movimientoDao.insertar(
                 MovimientoEntity(
@@ -508,6 +698,7 @@ class UserRepository(context: Context) {
                 )
             )
 
+
             movimientoDao.insertar(
                 MovimientoEntity(
                     remoteId = null,
@@ -523,9 +714,8 @@ class UserRepository(context: Context) {
                 )
             )
 
+
             true
         }
     }
 }
-
-
